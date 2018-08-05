@@ -1,0 +1,229 @@
+html {
+    background-color: whitesmoke;
+    color: #404040;
+    font-family: 'Open Sans', sans-serif;
+    overflow:hidden;
+    min-height:500px;
+}
+
+body {
+    height:100%;
+    margin:0;
+    padding:0;
+    overflow:hidden;
+    min-height:500px;
+}
+
+#cont {
+    display:block;
+    margin:0 auto 0 auto;
+    padding:0;
+    background-color: white;
+    box-shadow: 0 0 10px 1px gray;
+    width:55em;
+    height:100vh;
+    min-height:500px;
+    overflow:hidden;
+    grid-row-gap: 5px;
+    font-family: 'Open Sans', sans-serif;
+}
+
+#gridCont {
+    display:grid;
+    height:100vf;
+    grid-template-columns: 100%;
+    grid-template-rows: 90px auto 100%;
+    overflow: hidden;
+}
+
+#pageTitle {
+    display:block;
+    position: relative;
+    width:100%;
+    height:80px;
+    z-index: 99;
+    padding-top:5px;
+    align-self:flex-start;
+    background-color: #3949AB;
+    color:white;
+    border-radius: 0 0 10px 10px;
+    font-family: 'Open Sans', sans-serif;
+}
+
+#pageTitle img {
+    display:inline;
+    position:relative;
+    padding:5px;
+    padding-left:15px;
+    width:60px;
+    height:auto;
+    float:left;
+}
+
+h1 {
+    display:inline;
+    position: relative;
+    float:left;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: normal;
+}
+
+#newContainer {
+    display:block;
+    position: relative;
+    height:auto;
+    bottom:0;
+    margin:10px;
+    width:auto;
+    background-color: white;
+    align-self: baseline;
+}
+
+#newContainer div {
+    display:grid;
+    grid-template-columns: 10fr 2fr;
+    grid-template-rows: 100%;
+    width:100%;
+    height:auto;
+}
+
+#listContainer {
+    display:block;
+    position: relative;
+    margin:0;
+    height:inherit;
+    width:100%;
+    min-height:100px;
+    overflow:auto;
+}
+
+.lDiv {
+    display:grid;
+    margin: 2px auto 0 auto;
+    padding:2px;
+    grid-template-rows: minmax(22px, auto) 11px;
+    grid-template-columns: 1fr 20px;
+    height: 3em;
+    width:98%;
+}
+
+#inputBox {
+    font-size: 20px;
+    border:0;
+    padding: 4px;
+    outline: none;
+    width:100%;
+}
+
+.container {
+    max-width: 95%;
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 20px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    word-break: break-all;
+    color: #505050;
+}
+
+.container:hover {
+    box-shadow: 0 0 1px 1px whitesmoke;
+}
+
+/* Hide the browser's default checkbox */
+.container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 23px;
+    width: 23px;
+    background-color: #BDBDBD;
+}
+
+/* On mouse-over, add a grey background color */
+.container:hover input ~ .checkmark {
+    background-color: #424242;
+}
+
+/* When the checkbox is checked, add a blue background */
+.container input:checked ~ .checkmark {
+    background-color: #F50057;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+/* Show the checkmark when checked */
+.container input:checked ~ .checkmark:after {
+    display: block;
+}
+
+/* Style the checkmark/indicator */
+.container .checkmark:after {
+    left: 9px;
+    top: 5px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+#inputBtn {
+    border:2px solid #283593;
+    font-Size:20px;
+    outline:none;
+    padding:5px 10px 5px 10px;
+    border-radius:3px;
+    font-weight: bold;
+    cursor:pointer;
+    background-color: white;
+    color:#283593;
+}
+
+#inputBtn:hover {
+    background-Color: #283593 ;
+    color:#fff;
+}
+
+.tCan {
+    display:inline;
+    position:static;
+    float:right;
+    margin:0;
+    padding:0;
+    width:auto;
+    height:25px;
+    align-self: flex-start;
+    cursor: pointer;
+}
+
+.dateBox {
+    display:block;
+    color:#BBB;
+    margin:0 0 0 45px;
+    padding:0;
+    font-size:11px;
+    align-self: flex-end;
+    height:11px;
+    width:auto;
+    font-style: italic;
+}
