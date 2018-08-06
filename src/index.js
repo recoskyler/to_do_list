@@ -8,6 +8,9 @@ import listImage from './Images/listPic.png';
 import {variables} from './Helpers/variables';
 import {getFormattedCurrentDateTime, existsInArray} from './Helpers/functions';
 
+let currentTaskId = 0;
+let editMode      = false;
+
 export class List extends React.Component {
     constructor(props) {
         super(props);
@@ -19,6 +22,45 @@ export class List extends React.Component {
         this.handleClick = this.handleClick.bind(this);
         this.addListener = this.addListener.bind(this);
         this.deleteTask = this.deleteTask.bind(this);
+        this.editItem = this.editItem.bind(this);
+        this.saveChanges = this.saveChanges.bind(this);
+    }
+    
+    editItem(tid) {
+        editMode = true;
+        const tmp = JSON.parse(JSON.stringify( this.state.tasks ));
+        document.getElementById(variables.inputBoxId).value = tmp[tid].val;
+        document.getElementById(variables.buttonId).innerHTML = "Save";
+        document.getElementById(variables.buttonId).onClick = this.saveChanges;
+        document.getElementById(variables.inputBoxId).addEventListener("keyup", function(event) {
+            event.preventDefault();
+            if (event.keyCode === 13) {
+                document.getElementById(variables.buttonId).click();
+            }
+        });
+    }
+    
+    saveChanges(tsk) {        
+        if (tsk.replace(/ /g,'') === "" || tsk === null || tsk === undefined) {
+            document.getElementById(variables.inputBoxId).value = "";
+            document.getElementById(variables.inputBoxId).placeholder = variables.invalidEditPlaceholder;
+            document.getElementById(variables.inputBoxId).className = variables.invalidTaskClassName;
+            setTimeout(function(){ 
+                document.getElementById(variables.inputBoxId).placeholder = variables.defaultEditPlaceholder; 
+                document.getElementById(variables.inputBoxId).className = "";
+            }, 2000);
+            return false;
+        } else {
+            document.getElementById(variables.inputBoxId).placeholder = variables.defaultEditPlaceholder;
+        }
+        
+        let tmp = JSON.parse(JSON.stringify( this.state.tasks ));     
+        tmp[currentTaskId].val = tsk;
+        this.setState({tasks:tmp});
+        document.getElementById(variables.inputBoxId).value = "";
+        document.getElementById(variables.buttonId).innerHTML = "Add";
+        document.getElementById(variables.buttonId).onClick = this.handleClick;
+        document.getElementById(variables.inputBoxId).placeholder = variables.defaultPlaceholder; 
     }
     
     deleteTask(tid) {
@@ -42,7 +84,12 @@ export class List extends React.Component {
     }
 
     handleClick(e) {
-        this.addTask(document.getElementById(variables.inputBoxId).value.toString());
+        if (editMode) {
+            this.saveChanges(document.getElementById(variables.inputBoxId).value.toString())
+            editMode = false;
+        } else {
+            this.addTask(document.getElementById(variables.inputBoxId).value.toString());   
+        }
     }
     
     render() {
@@ -76,7 +123,7 @@ export class List extends React.Component {
     }
     
     addTask(tsk) {
-        if (existsInArray(tsk.toLowerCase().replace(/ /g,'')),this.state.tasks) {
+        if (existsInArray(tsk.toLowerCase().replace(/ /g,''), this.state.tasks)) {
             document.getElementById(variables.inputBoxId).value = "";
             document.getElementById(variables.inputBoxId).placeholder = variables.invalidPlaceholder;
             document.getElementById(variables.inputBoxId).className = variables.invalidTaskClassName;
@@ -88,8 +135,6 @@ export class List extends React.Component {
         } else {
             document.getElementById(variables.inputBoxId).placeholder = variables.defaultPlaceholder;
         }
-        
-        console.log(tsk);
         
         if (tsk.replace(/ /g,'') === "" || tsk === null || tsk === undefined) {
             document.getElementById(variables.inputBoxId).value = "";
@@ -105,7 +150,7 @@ export class List extends React.Component {
     getTasks(items) {
         const tempItems = this.state.tasks.map((itm, i) => {
             return (
-                <Item time={itm.added} onDel={this.deleteTask} value={itm.val} cs={itm.style} onChange={this.changeStyle} checkedState={itm.checked} key={i} id={i} checkTime={itm.checkedTime}/>
+                <Item onEdit={this.editItem} time={itm.added} onDel={this.deleteTask} value={itm.val} cs={itm.style} onChange={this.changeStyle} checkedState={itm.checked} key={i} id={i} checkTime={itm.checkedTime}/>
             );
         });
         

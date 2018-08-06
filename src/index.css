@@ -102,7 +102,7 @@ h1 {
     margin: 2px auto 0 auto;
     padding:2px;
     grid-template-rows: minmax(22px, auto) 12px;
-    grid-template-columns: 1fr 20px;
+    grid-template-columns: 1fr 25px 25px;
     height: auto;
     width:98%;
 }
@@ -205,6 +205,18 @@ h1 {
 }
 
 .tCan {
+    display:inline;
+    position:static;
+    float:right;
+    margin:0;
+    padding:0;
+    width:auto;
+    height:25px;
+    align-self: flex-start;
+    cursor: pointer;
+}
+
+.ePen {
     display:inline;
     position:static;
     float:right;

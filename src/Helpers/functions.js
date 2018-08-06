@@ -1,15 +1,12 @@
 export function getFormattedCurrentDateTime(COrA = false) {
     const fW = COrA === true ? "Checked  " : "Added  ";
-    var currentdate = new Date(); 
     var datetime = fW + getCurrentDateTime();
 
     return datetime;
 }
 
 export function getCurrentDateTime() {
-    let currentdate = new Date(); 
     const datetime = getCurrentDate() + " at " + getCurrentTime();
-
     return datetime;
 }
 

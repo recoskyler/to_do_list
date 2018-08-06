@@ -2,6 +2,7 @@ import React from 'react';
 import '../index.css';
 import {variables} from '../Helpers/variables';
 import tCanImg from '../Images/tCan.png';
+import editImg from '../Images/editPic.png';
 
 export class Item extends React.Component {
     constructor(props) {
@@ -9,6 +10,7 @@ export class Item extends React.Component {
         this.id = 0;
         this.handleChange = this.handleChange.bind(this);
         this.handleDel = this.handleDel.bind(this);
+        this.handleEdit = this.handleEdit.bind(this);
     }
 
     handleChange(e) {
@@ -17,6 +19,10 @@ export class Item extends React.Component {
 
     handleDel(e) {
         this.props.onDel(this.props.id);
+    }
+    
+    handleEdit(e) {
+        this.props.onEdit(this.props.id);
     }
 
     render() {
@@ -35,19 +41,22 @@ export class Item extends React.Component {
 
         return (
             <div className="lDiv">
-            <div className="lDiv">
-            <label style={labelStyle} className="container"  key={this.props.id.toString()}>{this.props.value}
-<input checked={this.props.checkedState} type="checkbox" onChange={this.handleChange}/>
-    <span className="checkmark"></span>
-</label>
-</div>
-<div className="lDiv">
-    <img onClick={this.handleDel} className="tCan" src={tCanImg} alt="Delete"/>
-        </div>
-<div className={variables.dateBoxId}>
-    {dt}
-</div>
-</div>
-);
-}
+                <div>
+                    <label style={labelStyle} className="container"  key={this.props.id.toString()}>{this.props.value}
+                        <input checked={this.props.checkedState} type="checkbox" onChange={this.handleChange}/>
+                        <span className="checkmark"></span>
+                    </label>
+                </div>
+                <div>
+                    <img onClick={this.handleEdit} className="ePen" src={editImg} alt="Edit"/>   
+                </div>
+                <div>
+                    <img onClick={this.handleDel} className="tCan" src={tCanImg} alt="Delete"/>
+                </div>
+                <div className={variables.dateBoxId}>
+                    {dt}
+                </div>
+            </div>
+        );
+    }
 }
