@@ -14,5 +14,8 @@ export const variables = {
     checkedStyle           : {textDecoration:"line-through",fontStyle:"italic",color:"#9e9e9e"},
     regularStyle           : {textDecoration:"none",fontStyle:"normal",color:"#424242"},
     invalidEditPlaceholder : "Please type something to save",
-    defaultEditPlaceholder : "Type edited task here"
+    defaultEditPlaceholder : "Type edited task here",
+    recoskylerLink         : "https://github.com/recoskyler",
+    savedPlaceholder       : "Saved",
+    savedClass             : "saved"
 };

@@ -8,28 +8,25 @@ html {
     background-color: whitesmoke;
     color: #404040;
     font-family: 'Open Sans', sans-serif;
-    overflow:hidden;
-    min-height:500px;
+    min-height:300px;
 }
 
 body {
     height:100%;
     margin:0;
     padding:0;
-    overflow:hidden;
     min-height:500px;
 }
 
 #cont {
     display:block;
     margin:0 auto 0 auto;
-    padding:0;
+    padding:0 0 10px 0;
     background-color: white;
     box-shadow: 0 0 10px 1px gray;
     width:55em;
-    height:100vh;
+    height:100%;
     min-height:500px;
-    overflow:hidden;
     grid-row-gap: 5px;
     font-family: 'Open Sans', sans-serif;
 }
@@ -53,8 +50,9 @@ body {
     align-self:flex-start;
     background-color: #3949AB;
     color:white;
-    border-radius: 0 0 5px 5px;
+    border-radius:0;
     font-family: 'Open Sans', sans-serif;
+    cursor:default;
 }
 
 #pageTitle img {
@@ -76,6 +74,10 @@ body {
     text-align: right;
     float:right;
     padding: 70px 10px 0 0;
+}
+
+#pageTitle a {
+    text-decoration: none;
     color:#7986CB;
 }
 
@@ -85,6 +87,7 @@ h1 {
     float:left;
     font-family: 'Open Sans', sans-serif;
     font-weight: normal;
+    cursor:default;
 }
 
 #newContainer {
@@ -114,6 +117,8 @@ h1 {
     width:100%;
     min-height:100px;
     overflow:auto;
+    margin-bottom: 15px;
+    margin-top:15px;
 }
 
 .lDiv {
@@ -128,10 +133,11 @@ h1 {
 
 #inputBox {
     font-size: 20px;
-    border:0;
     padding: 4px;
     outline: none;
-    width:100%;
+    width:98%;
+    border:2px solid #283593;
+    border-radius: 22px;
 }
 
 .container {
@@ -212,7 +218,7 @@ h1 {
     font-Size:20px;
     outline:none;
     padding:5px 10px 5px 10px;
-    border-radius:3px;
+    border-radius:22px;
     font-weight: bold;
     cursor:pointer;
     background-color: white;
@@ -220,7 +226,11 @@ h1 {
 }
 
 #inputBtn:hover {
-    background-Color: #283593 ;
+    border:2px solid #F50057;
+}
+
+#inputBtn:active {
+    background-Color: #F50057 ;
     color:#fff;
 }
 
@@ -262,25 +272,61 @@ h1 {
 
 .invalidTask::-webkit-input-placeholder
 {
-    color: #F50057;
+    color: #F44336;
 }
 .invalidTask:-moz-placeholder
 {
-    color: #F50057;
+    color: #F44336;
 }
 .invalidTask::-moz-placeholder
 {
-    color: #F50057;
+    color: #F44336;
 }
 .invalidTask::-ms-input-placeholder
 {
-    color: #F50057;
+    color: #F44336;
 }
 .invalidTask:-ms-input-placeholder
 {
-    color: #F50057;
+    color: #F44336;
 }
 .invalidTask::placeholder
 {
-    color: #F50057;
+    color: #F44336;
+}
+
+#inputBox:focus {
+    background-color:#F5F5F5;
+    border:2px solid #F50057;
+}
+
+#inputBox:hover {
+    border:2px solid #F50057;
+}
+
+#00C853
+
+.saved::-webkit-input-placeholder
+{
+    color: #00C853;
+}
+.saved:-moz-placeholder
+{
+    color: #00C853;
+}
+.saved::-moz-placeholder
+{
+    color: #00C853;
+}
+.saved::-ms-input-placeholder
+{
+    color: #00C853;
+}
+.saved:-ms-input-placeholder
+{
+    color: #00C853;
+}
+.saved::placeholder
+{
+    color: #00C853;
 }

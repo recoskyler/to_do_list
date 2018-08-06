@@ -67,7 +67,13 @@ export class List extends React.Component {
         document.getElementById(variables.inputBoxId).value = "";
         document.getElementById(variables.buttonId).innerHTML = "Add";
         document.getElementById(variables.buttonId).onClick = this.handleClick;
-        document.getElementById(variables.inputBoxId).placeholder = variables.defaultPlaceholder; 
+        document.getElementById(variables.inputBoxId).placeholder = variables.savedPlaceholder;
+        document.getElementById(variables.inputBoxId).className = variables.savedClass;
+        
+        setTimeout(function(){ 
+                document.getElementById(variables.inputBoxId).placeholder = variables.defaultEditPlaceholder; 
+                document.getElementById(variables.inputBoxId).className = "";
+        }, 2000);
     }
     
     deleteTask(tid) {
@@ -107,7 +113,7 @@ export class List extends React.Component {
                 <div id="pageTitle" className="box">
                     <img src={listImage} alt="To-Do List" />
                     <h1>My To-Do List</h1>
-                    <span>by Recoskyler</span>
+                    <span><a href={variables.recoskylerLink} target="_blank">by Recoskyler</a></span>
                 </div>
                 <div id="newContainer">
                     <div>
