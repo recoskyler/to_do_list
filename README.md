@@ -7,6 +7,7 @@ This is a ReactJS To-Do List test, which I use to imrove my newly acquired React
 * [Node.js - ReactJS](https://nodejs.org/en/)
 * [A web browser (Chrome)](https://www.google.com/chrome/)
 * [A Text Editor or IDE](http://brackets.io/)
+* Minimum 800x100 screen resolution.
 
 ## Built With
 
