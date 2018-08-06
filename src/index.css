@@ -91,7 +91,7 @@ h1 {
     display:block;
     position: relative;
     margin:0;
-    height:inherit;
+    height:100%;
     width:100%;
     min-height:100px;
     overflow:auto;
@@ -101,9 +101,9 @@ h1 {
     display:grid;
     margin: 2px auto 0 auto;
     padding:2px;
-    grid-template-rows: minmax(22px, auto) 11px;
+    grid-template-rows: minmax(22px, auto) 12px;
     grid-template-columns: 1fr 20px;
-    height: 3em;
+    height: auto;
     width:98%;
 }
 
@@ -226,4 +226,29 @@ h1 {
     height:11px;
     width:auto;
     font-style: italic;
+}
+
+.invalidTask::-webkit-input-placeholder
+{
+    color: #F50057;
+}
+.invalidTask:-moz-placeholder
+{
+    color: #F50057;
+}
+.invalidTask::-moz-placeholder
+{
+    color: #F50057;
+}
+.invalidTask::-ms-input-placeholder
+{
+    color: #F50057;
+}
+.invalidTask:-ms-input-placeholder
+{
+    color: #F50057;
+}
+.invalidTask::placeholder
+{
+    color: #F50057;
 }

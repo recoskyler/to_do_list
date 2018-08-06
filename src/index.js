@@ -5,6 +5,8 @@ import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 import {Item} from './Scripts/Item';
 import listImage from './Images/listPic.png';
+import {variables} from './Helpers/variables';
+import {getFormattedCurrentDateTime, existsInArray} from './Helpers/functions';
 
 export class List extends React.Component {
     constructor(props) {
@@ -16,22 +18,7 @@ export class List extends React.Component {
         this.setState = this.setState.bind(this);
         this.handleClick = this.handleClick.bind(this);
         this.addListener = this.addListener.bind(this);
-        this.findTask = this.findTask.bind(this);
         this.deleteTask = this.deleteTask.bind(this);
-        this.getCTime = this.getCTime.bind(this);
-    }
-    
-    getCTime(COrA) {
-        const fW = COrA === true ? "Checked  " : "Added  ";
-        var currentdate = new Date(); 
-        var datetime = fW + currentdate.getDate() + "/"
-        + (currentdate.getMonth()+1)  + "/" 
-        + currentdate.getFullYear() + " at "  
-        + currentdate.getHours() + ":"  
-        + currentdate.getMinutes() + ":" 
-        + currentdate.getSeconds();
-        
-        return datetime;
     }
     
     deleteTask(tid) {
@@ -45,17 +32,17 @@ export class List extends React.Component {
     }
 
     addListener() {
-        var input = document.getElementById("inputBox");
+        var input = document.getElementById(variables.inputBoxId);
         input.addEventListener("keyup", function(event) {
             event.preventDefault();
             if (event.keyCode === 13) {
-                document.getElementById("inputBtn").click();
+                document.getElementById(variables.buttonId).click();
             }
         });
     }
 
     handleClick(e) {
-        this.addTask(document.getElementById("inputBox").value.toString());
+        this.addTask(document.getElementById(variables.inputBoxId).value.toString());
     }
     
     render() {
@@ -69,8 +56,8 @@ export class List extends React.Component {
                 </div>
                 <div id="newContainer">
                     <div>
-                        <input id="inputBox" type="text" placeholder="Type task here" />
-                        <button id="inputBtn" onClick={this.handleClick}>Add</button>
+                        <input id={variables.inputBoxId} type="text" placeholder={variables.defaultPlaceholder} />
+                        <button id={variables.buttonId} onClick={this.handleClick}>Add</button>
                     </div>
                 </div>
                 <div id="listContainer">
@@ -84,44 +71,35 @@ export class List extends React.Component {
         let tmp = JSON.parse(JSON.stringify( this.state.tasks ));
         tmp[k].style = s === "regularStyle" ? "checkedStyle" : "regularStyle";
         tmp[k].checked = s === "checkedStyle" ? false : true;
-        tmp[k].checkedTime = this.getCTime(tmp[k].checked);
+        tmp[k].checkedTime = this.getFormattedCurrentDateTime(tmp[k].checked);
         this.setState({tasks:tmp});
     }
     
     addTask(tsk) {
-        if (this.findTask(tsk.trim().toLowerCase())) {
-            document.getElementById("inputBox").value = "";
-            document.getElementById("inputBox").placeholder = "Already added";
+        if (existsInArray(tsk.toLowerCase().replace(/ /g,'')),this.state.tasks) {
+            document.getElementById(variables.inputBoxId).value = "";
+            document.getElementById(variables.inputBoxId).placeholder = variables.invalidPlaceholder;
+            document.getElementById(variables.inputBoxId).className = variables.invalidTaskClassName;
+            setTimeout(function(){ 
+                document.getElementById(variables.inputBoxId).placeholder = variables.defaultPlaceholder; 
+                document.getElementById(variables.inputBoxId).className = "";
+            }, 2000);
             return false;
         } else {
-            document.getElementById("inputBox").placeholder = "Type task here";
+            document.getElementById(variables.inputBoxId).placeholder = variables.defaultPlaceholder;
         }
         
         console.log(tsk);
         
-        if (tsk.trim() === "" || tsk === null || tsk === undefined) {
-            document.getElementById("inputBox").value = "";
+        if (tsk.replace(/ /g,'') === "" || tsk === null || tsk === undefined) {
+            document.getElementById(variables.inputBoxId).value = "";
             return false;
         }
         
         let tmp = JSON.parse(JSON.stringify( this.state.tasks ));
-        tmp.push({val:tsk, checked:false, style:"regularStyle", added:this.getCTime(false), checkedTime:this.getCTime(true)});
+        tmp.push({val:tsk, checked:false, style:"regularStyle", added:getFormattedCurrentDateTime(false), checkedTime:getFormattedCurrentDateTime(true)});
         this.setState({tasks:tmp});
-        document.getElementById("inputBox").value = "";
-    }
-    
-    findTask(tsk) {
-        let tmp = JSON.parse(JSON.stringify( this.state.tasks ));
-        
-        const res = tmp.some((t) => {
-            if (t.val.trim().toLowerCase() === tsk) {
-                return true;
-            } else {
-                return false;
-            }
-        });
-        
-        return res;
+        document.getElementById(variables.inputBoxId).value = "";
     }
     
     getTasks(items) {
