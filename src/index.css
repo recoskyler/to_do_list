@@ -84,6 +84,14 @@ body {
     color:#7986CB;
 }
 
+#pageTitle a:hover {
+    color:#9FA8DA;
+}
+
+#pageTitle a:active {
+    color:#536DFE;
+}
+
 h1 {
     display:inline;
     position: relative;
@@ -231,6 +239,7 @@ h1 {
 
 #inputBtn:hover {
     border:2px solid #F50057;
+    color:#F50057;
 }
 
 #inputBtn:active {
