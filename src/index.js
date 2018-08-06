@@ -72,7 +72,7 @@ export class List extends React.Component {
         document.getElementById(variables.inputBoxId).className = variables.savedClass;
         editMode = false;
         setTimeout(function(){ 
-                document.getElementById(variables.inputBoxId).placeholder = variables.defaultEditPlaceholder; 
+                document.getElementById(variables.inputBoxId).placeholder = variables.defaultPlaceholder; 
                 document.getElementById(variables.inputBoxId).className = "";
         }, 1000);
     }
