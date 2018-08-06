@@ -12,3 +12,4 @@ This is a ReactJS To-Do List test, which I use to imrove my newly acquired React
 
 * [Node.js - ReactJS](https://nodejs.org/en/) - The web framework used
 * [Brackets](http://brackets.io/) - IDE used
+* [Material UI Colors](https://materialuicolors.co/) - Color palette used
