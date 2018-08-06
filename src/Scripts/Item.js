@@ -1,3 +1,9 @@
+//===============================================
+// Title:  To-Do List Item Component
+// Author: Adil Atalay Hamamcioglu (Recoskyler)
+// Date:   August 2018
+//===============================================
+
 import React from 'react';
 import '../index.css';
 import {variables} from '../Helpers/variables';

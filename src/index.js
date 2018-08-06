@@ -1,3 +1,9 @@
+//===============================================
+// Title:  To-Do List Main ReactJS Components
+// Author: Adil Atalay Hamamcioglu (Recoskyler)
+// Date:   August 2018
+//===============================================
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
@@ -28,6 +34,7 @@ export class List extends React.Component {
     
     editItem(tid) {
         editMode = true;
+        currentTaskId = tid;
         const tmp = JSON.parse(JSON.stringify( this.state.tasks ));
         document.getElementById(variables.inputBoxId).value = tmp[tid].val;
         document.getElementById(variables.buttonId).innerHTML = "Save";
@@ -100,6 +107,7 @@ export class List extends React.Component {
                 <div id="pageTitle" className="box">
                     <img src={listImage} alt="To-Do List" />
                     <h1>My To-Do List</h1>
+                    <span>by Recoskyler</span>
                 </div>
                 <div id="newContainer">
                     <div>
@@ -118,7 +126,7 @@ export class List extends React.Component {
         let tmp = JSON.parse(JSON.stringify( this.state.tasks ));
         tmp[k].style = s === "regularStyle" ? "checkedStyle" : "regularStyle";
         tmp[k].checked = s === "checkedStyle" ? false : true;
-        tmp[k].checkedTime = this.getFormattedCurrentDateTime(tmp[k].checked);
+        tmp[k].checkedTime = getFormattedCurrentDateTime(tmp[k].checked);
         this.setState({tasks:tmp});
     }
     

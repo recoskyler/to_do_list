@@ -1,3 +1,9 @@
+//===============================================
+// Title:  To-Do List Variables
+// Author: Adil Atalay Hamamcioglu (Recoskyler)
+// Date:   August 2018
+//===============================================
+
 export const variables = {
     defaultPlaceholder     : "Type task here",
     invalidPlaceholder     : "Already added",

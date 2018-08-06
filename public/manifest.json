@@ -1,3 +1,9 @@
+//===============================================
+// Title:  To-Do List Manifest file
+// Author: Adil Atalay Hamamcioglu (Recoskyler)
+// Date:   August 2018
+//===============================================
+
 {
   "short_name": "To-Do List",
   "name": "My To-Do List",

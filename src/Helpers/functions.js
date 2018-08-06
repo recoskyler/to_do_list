@@ -1,3 +1,9 @@
+//===============================================
+// Title:  To-Do List Functions
+// Author: Adil Atalay Hamamcioglu (Recoskyler)
+// Date:   August 2018
+//===============================================
+
 export function getFormattedCurrentDateTime(COrA = false) {
     const fW = COrA === true ? "Checked  " : "Added  ";
     var datetime = fW + getCurrentDateTime();
