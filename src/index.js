@@ -55,7 +55,8 @@ export class List extends React.Component {
             setTimeout(function(){ 
                 document.getElementById(variables.inputBoxId).placeholder = variables.defaultEditPlaceholder; 
                 document.getElementById(variables.inputBoxId).className = "";
-            }, 2000);
+            }, 3000);
+            editMode = true;
             return false;
         } else {
             document.getElementById(variables.inputBoxId).placeholder = variables.defaultEditPlaceholder;
@@ -69,11 +70,11 @@ export class List extends React.Component {
         document.getElementById(variables.buttonId).onClick = this.handleClick;
         document.getElementById(variables.inputBoxId).placeholder = variables.savedPlaceholder;
         document.getElementById(variables.inputBoxId).className = variables.savedClass;
-        
+        editMode = false;
         setTimeout(function(){ 
                 document.getElementById(variables.inputBoxId).placeholder = variables.defaultEditPlaceholder; 
                 document.getElementById(variables.inputBoxId).className = "";
-        }, 2000);
+        }, 1000);
     }
     
     deleteTask(tid) {
@@ -99,7 +100,6 @@ export class List extends React.Component {
     handleClick(e) {
         if (editMode) {
             this.saveChanges(document.getElementById(variables.inputBoxId).value.toString())
-            editMode = false;
         } else {
             this.addTask(document.getElementById(variables.inputBoxId).value.toString());   
         }
@@ -144,7 +144,7 @@ export class List extends React.Component {
             setTimeout(function(){ 
                 document.getElementById(variables.inputBoxId).placeholder = variables.defaultPlaceholder; 
                 document.getElementById(variables.inputBoxId).className = "";
-            }, 2000);
+            }, 1000);
             return false;
         } else {
             document.getElementById(variables.inputBoxId).placeholder = variables.defaultPlaceholder;
@@ -159,6 +159,13 @@ export class List extends React.Component {
         tmp.push({val:tsk, checked:false, style:"regularStyle", added:getFormattedCurrentDateTime(false), checkedTime:getFormattedCurrentDateTime(true)});
         this.setState({tasks:tmp});
         document.getElementById(variables.inputBoxId).value = "";
+        document.getElementById(variables.inputBoxId).placeholder = variables.addedPlaceholder;
+        document.getElementById(variables.inputBoxId).className = variables.addedClass;
+        
+        setTimeout(function(){ 
+                document.getElementById(variables.inputBoxId).placeholder = variables.defaultEditPlaceholder; 
+                document.getElementById(variables.inputBoxId).className = "";
+        }, 1000);
     }
     
     getTasks(items) {

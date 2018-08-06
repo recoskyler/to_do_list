@@ -5,7 +5,7 @@
 //===============================================*/
 
 html {
-    background-color: whitesmoke;
+    background-color: #FAFAFA;
     color: #404040;
     font-family: 'Open Sans', sans-serif;
     min-height:300px;
@@ -26,16 +26,19 @@ body {
     box-shadow: 0 0 10px 1px gray;
     width:55em;
     height:100%;
-    min-height:500px;
+    min-height:auto;
     grid-row-gap: 5px;
     font-family: 'Open Sans', sans-serif;
+    border-radius: 25px;
+    margin-bottom: 40px;
+    margin-top:20px;
 }
 
 #gridCont {
     display:grid;
-    height:100vf;
+    height:auto;
     grid-template-columns: 100%;
-    grid-template-rows: 90px auto 100vf;
+    grid-template-rows: 100px auto auto;
     overflow: hidden;
 }
 
@@ -50,7 +53,7 @@ body {
     align-self:flex-start;
     background-color: #3949AB;
     color:white;
-    border-radius:0;
+    border-radius:25px 25px 0 0;
     font-family: 'Open Sans', sans-serif;
     cursor:default;
 }
@@ -115,7 +118,7 @@ h1 {
     margin:0;
     height:100%;
     width:100%;
-    min-height:100px;
+    min-height:0;
     overflow:auto;
     margin-bottom: 15px;
     margin-top:15px;
@@ -142,6 +145,7 @@ h1 {
 
 .container {
     max-width: 95%;
+    width:95%;
     display: block;
     position: relative;
     padding-left: 35px;
@@ -152,7 +156,7 @@ h1 {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    word-break: keep-all;
+    word-wrap:break-word;
     text-align: justify;
     color: #505050;
 }

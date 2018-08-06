@@ -17,5 +17,7 @@ export const variables = {
     defaultEditPlaceholder : "Type edited task here",
     recoskylerLink         : "https://github.com/recoskyler",
     savedPlaceholder       : "Saved",
-    savedClass             : "saved"
+    savedClass             : "saved",
+    addedPlaceholder       : "Added",
+    addedClass             : "saved"
 };
