@@ -168,23 +168,31 @@ export class List extends React.Component {
         if (e.options[e.selectedIndex].value === "edit") {
             document.getElementById("newTagContainer").style.display = "block";
             document.getElementById(variables.inputBoxId).disabled = true;
+            document.getElementById(variables.buttonId).disabled = true;
             tagEditMode = 1;
         } else {
             document.getElementById("newTagContainer").style.display = "none";
-            document.getElementById(variables.inputBoxId).disabled = true;
+            document.getElementById(variables.inputBoxId).disabled = false;
+            document.getElementById(variables.buttonId).disabled = false;
             tagEditMode = 0;
         }
     }
     
     changeTagEditMode(e) {
-        tagEditMode = tagEditMode === 1 ? 2 : 1;
-        let btnText = tagEditMode === 1 ? "Add Tag" : "Delete Tag";
-        let func    = tagEditMode === 1 ? this.addTag : null;
+        e = document.getElementById("newTagCombo");
+        if (e.options[e.selectedIndex].value === "addnew") {
+            tagEditMode = 2;
+        } else {
+            tagEditMode = 1;
+        }
+        
+        let btnText = tagEditMode === 2 ? "Add Tag" : "Delete Tag";
+        let func    = tagEditMode === 2 ? this.addTag : null;
         document.getElementById("tagBtn").innerHTML = btnText; 
     }
     
     addTag(e) {
-        
+        e = document.getElementById(variables.tagComboId);
     }
 
     changeStyle(s, k) {
