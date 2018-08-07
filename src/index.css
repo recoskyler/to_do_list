@@ -242,11 +242,12 @@
         padding-left:15px;
         padding-right:15px;
         color:#424242;
+        margin:0;
     }
     
     #tags:hover {
         animation-name: changeBorderColor;
-        animation-duration: 0.6s;
+        animation-duration: 0.3s;
         border-color:#F50057;
     }
 
@@ -346,7 +347,7 @@
 
     #newContainer div {
         display:grid;
-        grid-template-columns: 4fr 1fr 1fr;
+        grid-template-columns: 16fr 6fr 2fr;
         grid-template-rows: 100%;
         grid-column-gap: 10px;
         width:100%;
@@ -378,7 +379,7 @@
     
     .tagLbl {
         width:auto;
-        height:auto;
+        height:40px;
         background-color:#F50057;
         color:white;
         font-size:16px;
@@ -388,7 +389,7 @@
     }
     
     .checkedTagLbl {
-        background-color:#F06292;
+        background-color:#F8BBD0;
     }
     
     .tagLbl span {
@@ -421,7 +422,7 @@
         cursor:pointer;
         background-color: white;
         color:#283593;
-        width:auto;
+        width:150px;
         margin-left:10px;
     }
 
