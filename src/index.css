@@ -215,7 +215,7 @@
         font-family: 'Open Sans', sans-serif;
         min-height:100px;
         min-width:800px;
-        background-image: url("./Images/wallpaper.png");
+        background-image: url("./Images/wallpaper.jpg");
         background-repeat:no-repeat;
         background-size:cover;
         background-attachment: fixed;
@@ -291,7 +291,7 @@
         float:right;
         padding: 70px 10px 0 0;
     }
-
+    
     #pageTitle a {
         text-decoration: none;
         color:#7986CB;
@@ -347,16 +347,19 @@
     }
 
     .lDiv {
+        -webkit-animation: changeOpacity 0.5s 1;
+        height:auto;
         display:grid;
         margin: 0 auto 0 auto;
         padding:2px;
         grid-template-rows: minmax(25px 100%) 15px;
         grid-template-columns: 1fr 30px 30px;
-        height: auto;
         width:98%;
     }
 
     #inputBox {
+        animation-name: changeBorderColorNormal;
+        animation-duration: 0.6s;
         font-size: 20px;
         outline: none;
         width:95%;
@@ -364,9 +367,12 @@
         border-radius: 22px;
         padding-left:15px;
         padding-right:15px;
+        color:#424242;
     }
 
     #inputBtn {
+        animation-name: changeButtonNormal;
+        animation-duration: 0.6s;
         border:2px solid #283593;
         font-Size:20px;
         outline:none;
@@ -379,7 +385,9 @@
     }
 
     #inputBtn:hover {
-        border:2px solid #F50057;
+        animation-name: changeButton;
+        animation-duration: 0.3s;
+        border-color:#F50057;
         color:#F50057;
     }
 
@@ -470,11 +478,14 @@
 
 #inputBox:focus {
     background-color:#F5F5F5;
-    border:2px solid #F50057;
+    border-color:#F50057;
 }
 
 #inputBox:hover {
-    border:2px solid #F50057;
+    animation-name: changeBorderColor;
+    animation-duration: 0.3s;
+    border-color:#F50057;
+    color:#424242;
 }
 
 .saved::-webkit-input-placeholder
@@ -579,4 +590,39 @@
     -webkit-transform: rotate(45deg);
     -ms-transform: rotate(45deg);
     transform: rotate(45deg);
+}
+
+@keyframes changeBorderColor {
+    from {border-color: #283593;}
+    to {border-color: #F50057;}
+}
+
+@keyframes changeBorderColorNormal {
+    from {border-color: #F50057;}
+    to {border-color: #283593;}
+}
+
+@keyframes changeTextColor {
+    from {color:#283593;}
+    to {color:#F50057;}
+}
+
+@keyframes changeTextColorNormal {
+    from {color:#F50057;}
+    to {color:#283593;}
+}
+
+@keyframes changeButton {
+    from {border-color: #283593;color:#283593;}
+    to {border-color: #F50057;color:#F50057;}
+}
+
+@keyframes changeButtonNormal {
+    from {border-color: #F50057;color:#F50057;}
+    to {border-color: #283593;color:#283593;}
+}
+
+@-webkit-keyframes changeOpacity {
+  0%   { opacity: 0; }
+  100% { opacity: 1; }
 }
