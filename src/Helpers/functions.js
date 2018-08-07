@@ -61,5 +61,4 @@ export function loadTasks() {
 
 export function saveTasks(t) {
     localStorage.setItem(variables.keyName, JSON.stringify(t));
-    console.log(JSON.stringify(t));
 }

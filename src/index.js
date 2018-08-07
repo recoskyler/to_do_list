@@ -38,6 +38,7 @@ export class List extends React.Component {
         let tmp = JSON.parse(JSON.stringify( this.state.tasks ));
         document.getElementById(variables.inputBoxId).value = tmp[tid].val;
         document.getElementById(variables.buttonId).innerHTML = "Save";
+        document.getElementById(variables.tagComboId).value = tmp[tid].tag;
         document.getElementById(variables.buttonId).onClick = this.saveChanges;
         document.getElementById(variables.inputBoxId).addEventListener("keyup", function(event) {
             event.preventDefault();
@@ -62,14 +63,17 @@ export class List extends React.Component {
             document.getElementById(variables.inputBoxId).placeholder = variables.defaultEditPlaceholder;
         }
         
-        let tmp = JSON.parse(JSON.stringify( this.state.tasks ));     
+        let tmp = JSON.parse(JSON.stringify( this.state.tasks ));
+        let e = document.getElementById(variables.tagComboId);
         tmp[currentTaskId].val = tsk;
+        tmp[currentTaskId].tag = e.options[e.selectedIndex].value;
         this.setState({tasks:tmp});
         document.getElementById(variables.inputBoxId).value = "";
         document.getElementById(variables.buttonId).innerHTML = "Add";
         document.getElementById(variables.buttonId).onClick = this.handleClick;
         document.getElementById(variables.inputBoxId).placeholder = variables.savedPlaceholder;
         document.getElementById(variables.inputBoxId).className = variables.savedClass;
+        document.getElementById(variables.tagComboId).value = "0";
         editMode = false;
         setTimeout(function(){ 
                 document.getElementById(variables.inputBoxId).placeholder = variables.defaultPlaceholder; 
@@ -122,7 +126,7 @@ export class List extends React.Component {
                 <div id="newContainer">
                     <div>
                         <input id={variables.inputBoxId} type="text" placeholder={variables.defaultPlaceholder} />
-                        <select id="tags">
+                        <select id={variables.tagComboId}>
                             <option value="0">Home</option>
                             <option value="1">Work</option>
                             <option value="2">School</option>
@@ -166,7 +170,7 @@ export class List extends React.Component {
             return false;
         }
         
-        let e = document.getElementById("tags");
+        let e = document.getElementById(variables.tagComboId);
         let itemTag = e.options[e.selectedIndex].value;
         
         if (itemTag === null || itemTag === undefined || itemTag === "-1") {

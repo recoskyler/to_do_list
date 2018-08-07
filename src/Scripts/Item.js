@@ -34,6 +34,7 @@ export class Item extends React.Component {
     render() {
         let labelStyle = {};
         let dt = this.props.time;
+        let tagClass = "tagLbl";
 
         if (this.props.cs === "regularStyle") {
             labelStyle = variables.regularStyle;
@@ -43,6 +44,7 @@ export class Item extends React.Component {
 
         if (this.props.checkedState) {
             dt = this.props.checkTime;
+            tagClass += " checkedTagLbl";
         }
 
         return (
@@ -53,7 +55,7 @@ export class Item extends React.Component {
                         <span className="checkmark"></span>
                     </label>
                 </div>
-                <div className="tagLbl">
+                <div className={tagClass}>
                     <span>{document.getElementById("tags").options[this.props.tag].text}</span>
                 </div>
                 <div>

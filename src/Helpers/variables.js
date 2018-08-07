@@ -20,5 +20,6 @@ export const variables = {
     savedClass             : "saved",
     addedPlaceholder       : "Added",
     addedClass             : "saved",
-    keyName                : "tasks"
+    keyName                : "tasks",
+    tagComboId             : "tags"
 };

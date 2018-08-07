@@ -379,12 +379,16 @@
     .tagLbl {
         width:auto;
         height:auto;
-        background-color:whitesmoke;
-        color:#424242;
+        background-color:#F50057;
+        color:white;
         font-size:16px;
         text-align: center;
         vertical-align: middle;
         border-radius: 22px;
+    }
+    
+    .checkedTagLbl {
+        background-color:#F06292;
     }
     
     .tagLbl span {
@@ -417,7 +421,7 @@
         cursor:pointer;
         background-color: white;
         color:#283593;
-        width:100px;
+        width:auto;
         margin-left:10px;
     }
 
