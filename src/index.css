@@ -596,17 +596,14 @@
     left: 0;
     height: 23px;
     width: 23px;
-    background-color: #BDBDBD;
+    background-color: transparent;
+    border-radius: 25px;
+    border:2px solid #283593;
 }
 
 /* On mouse-over, add a grey background color */
 .container:hover input ~ .checkmark {
-    background-color: #424242;
-}
-
-/* When the checkbox is checked, add a blue background */
-.container input:checked ~ .checkmark {
-    background-color: #F50057;
+    border-color: #F50057;
 }
 
 /* Create the checkmark/indicator (hidden when not checked) */
@@ -627,8 +624,8 @@
     top: 5px;
     width: 5px;
     height: 10px;
-    border: solid white;
-    border-width: 0 3px 3px 0;
+    border: solid #F50057;
+    border-width: 0 2px 2px 0;
     -webkit-transform: rotate(45deg);
     -ms-transform: rotate(45deg);
     transform: rotate(45deg);
