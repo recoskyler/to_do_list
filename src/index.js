@@ -12,7 +12,7 @@ import registerServiceWorker from './registerServiceWorker';
 import {Item} from './Scripts/Item';
 import listImage from './Images/listPic.png';
 import {variables} from './Helpers/variables';
-import {getFormattedCurrentDateTime, existsInArray} from './Helpers/functions';
+import {getFormattedCurrentDateTime, existsInArray, saveTasks, loadTasks} from './Helpers/functions';
 
 let currentTaskId = 0;
 let editMode      = false;
@@ -75,6 +75,8 @@ export class List extends React.Component {
                 document.getElementById(variables.inputBoxId).placeholder = variables.defaultPlaceholder; 
                 document.getElementById(variables.inputBoxId).className = "";
         }, 1000);
+        
+        saveTasks(this.state.tasks);
     }
     
     deleteTask(tid) {
@@ -85,6 +87,7 @@ export class List extends React.Component {
     
     componentDidMount() {
         this.addListener();
+        this.setState({tasks: loadTasks()});
     }
 
     addListener() {
@@ -166,6 +169,9 @@ export class List extends React.Component {
                 document.getElementById(variables.inputBoxId).placeholder = variables.defaultEditPlaceholder; 
                 document.getElementById(variables.inputBoxId).className = "";
         }, 1000);
+        
+        saveTasks(this.state.tasks);
+        console.log(JSON.stringify(this.state.tasks));
     }
     
     getTasks(items) {

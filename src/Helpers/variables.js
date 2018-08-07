@@ -19,5 +19,6 @@ export const variables = {
     savedPlaceholder       : "Saved",
     savedClass             : "saved",
     addedPlaceholder       : "Added",
-    addedClass             : "saved"
+    addedClass             : "saved",
+    savePath               : "../Saves/tasks.json"
 };

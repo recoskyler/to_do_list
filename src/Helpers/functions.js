@@ -4,6 +4,9 @@
 // Date:   August 2018
 //===============================================
 
+import {variables} from './variables';
+import taskFile from '../Saves/tasks.json';
+
 export function getFormattedCurrentDateTime(COrA = false) {
     const fW = COrA === true ? "Checked  " : "Added  ";
     var datetime = fW + getCurrentDateTime();
@@ -34,7 +37,7 @@ export function existsInArray(itm, arr) {
     if (arr === undefined || arr === null || arr.length === 0) {
         return false;    
     }
-    
+
     let tmp = JSON.parse(JSON.stringify( arr ));
 
     const res = tmp.some((t) => {
@@ -46,4 +49,12 @@ export function existsInArray(itm, arr) {
     });
 
     return res;
+}
+
+export function loadTasks() {
+    return taskFile;
+}
+
+export function saveTasks(t) {
+    
 }
