@@ -10,12 +10,14 @@ import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 import {Item} from './Scripts/Item';
+import {Tag} from './Scripts/Tag'
 import listImage from './Images/listPic.png';
 import {variables} from './Helpers/variables';
 import {getFormattedCurrentDateTime, existsInArray, saveTasks, loadTasks} from './Helpers/functions';
 
 let currentTaskId = 0;
 let editMode      = false;
+let tagEditMode   = 0;
 
 export class List extends React.Component {
     constructor(props) {
@@ -23,13 +25,17 @@ export class List extends React.Component {
         this.changeStyle = this.changeStyle.bind(this);
         this.getTasks = this.getTasks.bind(this);
         this.addTask = this.addTask.bind(this);
-        this.state = {tasks:[]};
+        this.state = {tasks:[], tags:["Home", "Work", "School", "Other"]};
         this.setState = this.setState.bind(this);
         this.handleClick = this.handleClick.bind(this);
         this.addListener = this.addListener.bind(this);
         this.deleteTask = this.deleteTask.bind(this);
         this.editItem = this.editItem.bind(this);
         this.saveChanges = this.saveChanges.bind(this);
+        this.addTag = this.addTag.bind(this);
+        this.checkEdit = this.checkEdit.bind(this)
+        this.changeTagEditMode = this.changeTagEditMode.bind(this);
+        this.deleteTag = this.deleteTag.bind(this);
     }
     
     editItem(tid) {
@@ -74,7 +80,7 @@ export class List extends React.Component {
         document.getElementById(variables.inputBoxId).placeholder = variables.savedPlaceholder;
         document.getElementById(variables.inputBoxId).className = variables.savedClass;
         document.getElementById(variables.tagComboId).value = "0";
-        editMode = false;
+        editMode = false; 
         setTimeout(function(){ 
                 document.getElementById(variables.inputBoxId).placeholder = variables.defaultPlaceholder; 
                 document.getElementById(variables.inputBoxId).className = "";
@@ -114,7 +120,10 @@ export class List extends React.Component {
     }
     
     render() {
-        const t = this.getTasks(this.state.tasks);
+        const i = this.getTasks(this.state.tasks);
+        const t = this.getTags(this.state.tags);
+        
+        console.log(t);
         
         return (
             <div id="gridCont">
@@ -126,20 +135,56 @@ export class List extends React.Component {
                 <div id="newContainer">
                     <div>
                         <input id={variables.inputBoxId} type="text" placeholder={variables.defaultPlaceholder} />
-                        <select id={variables.tagComboId}>
-                            <option value="0">Home</option>
-                            <option value="1">Work</option>
-                            <option value="2">School</option>
-                            <option value="3">Other</option>
+                        <select id={variables.tagComboId} onChange={this.checkEdit}>
+                            {t}
+                            <option value="edit">Edit Tags</option>
                         </select>
                         <button id={variables.buttonId} onClick={this.handleClick}>Add</button>
                     </div>
                 </div>
+                <div id="newTagContainer">
+                    <div>
+                        <input id="newTagBox" type="text" placeholder="New Tag Name" />
+                        <select id="newTagCombo" onChange={this.changeTagEditMode}>
+                            {t}
+                            <option value="addnew">Add New</option>
+                        </select>
+                        <button id="tagBtn" onClick={this.deleteTag}>Delete Tag</button>
+                    </div>
+                </div>
                 <div id="listContainer">
-                    {t}
+                    {i}
                 </div>
             </div>
         );
+    }
+    
+    deleteTag(e) {
+        
+    }
+    
+    checkEdit(e) {
+        e = document.getElementById(variables.tagComboId);
+        if (e.options[e.selectedIndex].value === "edit") {
+            document.getElementById("newTagContainer").style.display = "block";
+            document.getElementById(variables.inputBoxId).disabled = true;
+            tagEditMode = 1;
+        } else {
+            document.getElementById("newTagContainer").style.display = "none";
+            document.getElementById(variables.inputBoxId).disabled = true;
+            tagEditMode = 0;
+        }
+    }
+    
+    changeTagEditMode(e) {
+        tagEditMode = tagEditMode === 1 ? 2 : 1;
+        let btnText = tagEditMode === 1 ? "Add Tag" : "Delete Tag";
+        let func    = tagEditMode === 1 ? this.addTag : null;
+        document.getElementById("tagBtn").innerHTML = btnText; 
+    }
+    
+    addTag(e) {
+        
     }
 
     changeStyle(s, k) {
@@ -193,7 +238,7 @@ export class List extends React.Component {
     }
     
     getTasks(items) {
-        const tempItems = this.state.tasks.map((itm, i) => {
+        const tempItems = items.map((itm, i) => {
             return (
                 <Item onEdit={this.editItem} time={itm.added} onDel={this.deleteTask} value={itm.val} cs={itm.style} onChange={this.changeStyle} checkedState={itm.checked} key={i} id={i} checkTime={itm.checkedTime} tag={itm.tag}/>
             );
@@ -201,6 +246,23 @@ export class List extends React.Component {
         
         if (tempItems.length >= 1) {
             return tempItems;
+        } else {
+            return [];
+        }
+        
+    }
+    
+    getTags(items) {
+        const tempTags = items.map((t, i) => {
+            return (
+                <Tag val={t} id={i} key={i}/>
+            );
+        });
+        
+        console.log(tempTags);
+        
+        if (tempTags.length >= 1) {
+            return tempTags;
         } else {
             return [];
         }
