@@ -53,6 +53,9 @@ export class Item extends React.Component {
                         <span className="checkmark"></span>
                     </label>
                 </div>
+                <div className="tagLbl">
+                    <span>{document.getElementById("tags").options[this.props.tag].text}</span>
+                </div>
                 <div>
                     <img onClick={this.handleEdit} className="ePen" src={editImg} alt="Edit"/>   
                 </div>

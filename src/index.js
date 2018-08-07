@@ -35,7 +35,7 @@ export class List extends React.Component {
     editItem(tid) {
         editMode = true;
         currentTaskId = tid;
-        const tmp = JSON.parse(JSON.stringify( this.state.tasks ));
+        let tmp = JSON.parse(JSON.stringify( this.state.tasks ));
         document.getElementById(variables.inputBoxId).value = tmp[tid].val;
         document.getElementById(variables.buttonId).innerHTML = "Save";
         document.getElementById(variables.buttonId).onClick = this.saveChanges;
@@ -76,13 +76,14 @@ export class List extends React.Component {
                 document.getElementById(variables.inputBoxId).className = "";
         }, 1000);
         
-        saveTasks(this.state.tasks);
+        saveTasks(tmp);
     }
     
     deleteTask(tid) {
         let tmp = JSON.parse(JSON.stringify( this.state.tasks ));     
         tmp.splice(tid, 1);
-        this.setState({tasks:tmp});      
+        this.setState({tasks:tmp});
+        saveTasks(tmp);
     }
     
     componentDidMount() {
@@ -121,6 +122,12 @@ export class List extends React.Component {
                 <div id="newContainer">
                     <div>
                         <input id={variables.inputBoxId} type="text" placeholder={variables.defaultPlaceholder} />
+                        <select id="tags">
+                            <option value="0">Home</option>
+                            <option value="1">Work</option>
+                            <option value="2">School</option>
+                            <option value="3">Other</option>
+                        </select>
                         <button id={variables.buttonId} onClick={this.handleClick}>Add</button>
                     </div>
                 </div>
@@ -137,6 +144,7 @@ export class List extends React.Component {
         tmp[k].checked = s === "checkedStyle" ? false : true;
         tmp[k].checkedTime = getFormattedCurrentDateTime(tmp[k].checked);
         this.setState({tasks:tmp});
+        saveTasks(tmp);
     }
     
     addTask(tsk) {
@@ -158,8 +166,15 @@ export class List extends React.Component {
             return false;
         }
         
+        let e = document.getElementById("tags");
+        let itemTag = e.options[e.selectedIndex].value;
+        
+        if (itemTag === null || itemTag === undefined || itemTag === "-1") {
+            itemTag = 3;
+        }
+        
         let tmp = JSON.parse(JSON.stringify( this.state.tasks ));
-        tmp.push({val:tsk, checked:false, style:"regularStyle", added:getFormattedCurrentDateTime(false), checkedTime:getFormattedCurrentDateTime(true)});
+        tmp.push({val:tsk, checked:false, style:"regularStyle", added:getFormattedCurrentDateTime(false), checkedTime:getFormattedCurrentDateTime(true), tag:itemTag});
         this.setState({tasks:tmp});
         document.getElementById(variables.inputBoxId).value = "";
         document.getElementById(variables.inputBoxId).placeholder = variables.addedPlaceholder;
@@ -170,14 +185,13 @@ export class List extends React.Component {
                 document.getElementById(variables.inputBoxId).className = "";
         }, 1000);
         
-        saveTasks(this.state.tasks);
-        console.log(JSON.stringify(this.state.tasks));
+        saveTasks(tmp);
     }
     
     getTasks(items) {
         const tempItems = this.state.tasks.map((itm, i) => {
             return (
-                <Item onEdit={this.editItem} time={itm.added} onDel={this.deleteTask} value={itm.val} cs={itm.style} onChange={this.changeStyle} checkedState={itm.checked} key={i} id={i} checkTime={itm.checkedTime}/>
+                <Item onEdit={this.editItem} time={itm.added} onDel={this.deleteTask} value={itm.val} cs={itm.style} onChange={this.changeStyle} checkedState={itm.checked} key={i} id={i} checkTime={itm.checkedTime} tag={itm.tag}/>
             );
         });
         

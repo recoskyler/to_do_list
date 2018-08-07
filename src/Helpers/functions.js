@@ -5,7 +5,6 @@
 //===============================================
 
 import {variables} from './variables';
-import taskFile from '../Saves/tasks.json';
 
 export function getFormattedCurrentDateTime(COrA = false) {
     const fW = COrA === true ? "Checked  " : "Added  ";
@@ -52,9 +51,15 @@ export function existsInArray(itm, arr) {
 }
 
 export function loadTasks() {
-    return taskFile;
+    let obj = JSON.parse(localStorage.getItem(variables.keyName));
+    
+    if (obj === null || obj === undefined || obj.length === 0) {
+        return [];
+    }
+    return obj;
 }
 
 export function saveTasks(t) {
-    
+    localStorage.setItem(variables.keyName, JSON.stringify(t));
+    console.log(JSON.stringify(t));
 }
