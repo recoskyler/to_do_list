@@ -144,12 +144,12 @@ export class List extends React.Component {
                 </div>
                 <div id="newTagContainer">
                     <div>
-                        <input id="newTagBox" type="text" placeholder="New Tag Name" />
-                        <select id="newTagCombo" onChange={this.changeTagEditMode}>
+                        <input id={variables.tagBoxId} type="text" placeholder="New Tag Name" />
+                        <select id={variables.tagEditComboId} onChange={this.changeTagEditMode}>
                             {t}
                             <option value="addnew">Add New</option>
                         </select>
-                        <button id="tagBtn" onClick={this.deleteTag}>Delete Tag</button>
+                        <button id={variables.tagButtonId} onClick={this.deleteTag}>Delete Tag</button>
                     </div>
                 </div>
                 <div id="listContainer">
@@ -176,23 +176,31 @@ export class List extends React.Component {
             document.getElementById(variables.buttonId).disabled = false;
             tagEditMode = 0;
         }
+
+        if (tagEditMode === 1) {
+            document.getElementById(variables.tagBoxId).disabled = true;
+        } else {
+            document.getElementById(variables.tagBoxId).disabled = false;
+        }
     }
     
     changeTagEditMode(e) {
-        e = document.getElementById("newTagCombo");
+        e = document.getElementById(variables.tagEditComboId);
         if (e.options[e.selectedIndex].value === "addnew") {
             tagEditMode = 2;
+            document.getElementById(variables.tagBoxId).disabled = false;
         } else {
             tagEditMode = 1;
+            document.getElementById(variables.tagBoxId).disabled = true;
         }
         
         let btnText = tagEditMode === 2 ? "Add Tag" : "Delete Tag";
-        let func    = tagEditMode === 2 ? this.addTag : null;
-        document.getElementById("tagBtn").innerHTML = btnText; 
+        let func    = tagEditMode === 2 ? this.addTag : this.deleteTag;
+        document.getElementById(variables.tagButtonId).innerHTML = btnText; 
     }
     
     addTag(e) {
-        e = document.getElementById(variables.tagComboId);
+        e = document.getElementById(variables.tagEditComboId);
     }
 
     changeStyle(s, k) {

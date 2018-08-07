@@ -21,5 +21,8 @@ export const variables = {
     addedPlaceholder       : "Added",
     addedClass             : "saved",
     keyName                : "tasks",
-    tagComboId             : "tags"
+    tagComboId             : "tags",
+    tagEditComboId         : "tagsE",
+    tagBoxId               : "newTagBox",
+    tagButtonId            : "tagBtn"
 };
