@@ -26,7 +26,7 @@ export const variables = {
     tagBoxId                 : "newTagBox",
     tagButtonId              : "tagBtn",
     tagKeyName               : "tags",
-    invalidTagPlaceholder    : "Please type a valid tag",
+    invalidTagPlaceholder    : "Please type a valid tag name",
     defaultTagPlaceholder    : "New tag name",
     invalidTagDelPlaceholder : "Please delete all tasks tagged"
 };

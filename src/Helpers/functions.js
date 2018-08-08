@@ -81,15 +81,13 @@ export function loadTags() {
     return obj;
 }
 
-export function tagExists(t, arr, tArr) {
+export function tagExists(t, arr) {
     if (arr === undefined || arr === null || arr.length === 0) {
         return false;
     }
 
     return arr.some((tt) => {
-        let tg = getByVal(tt.tag, variables.tagComboId);
-
-        if (tg === t) {
+        if (tt.tag === t) {
             return true;
         } else {
             return false;

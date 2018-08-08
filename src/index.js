@@ -187,7 +187,7 @@ export class List extends React.Component {
         e = document.getElementById(variables.tagEditComboId);
         const index = e.selectedIndex
 
-        if (tagExists(e.options[index].text, this.state.tasks, this.state.tags) || e.options[index].value === "other") {
+        if (tagExists(e.options[index].text, this.state.tasks) || e.options[index].value === "other") {
             document.getElementById(variables.tagBoxId).value = "";
             document.getElementById(variables.tagBoxId).placeholder = variables.invalidTagDelPlaceholder + " " + e.options[index].text;
             document.getElementById(variables.tagBoxId).className = variables.invalidTaskClassName;
