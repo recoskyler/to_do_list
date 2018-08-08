@@ -57,7 +57,7 @@ export class Item extends React.Component {
                     </label>
                 </div>
                 <div className={tagClass}>
-                    <span>{getByVal(this.props.tag, variables.tagComboId, false)}</span>
+                    <span>{this.props.tag}</span>
                 </div>
                 <div>
                     <img onClick={this.handleEdit} className="ePen" src={editImg} alt="Edit"/>   

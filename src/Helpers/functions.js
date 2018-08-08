@@ -88,7 +88,7 @@ export function tagExists(t, arr, tArr) {
 
     return arr.some((tt) => {
         let tg = getByVal(tt.tag, variables.tagComboId);
-        console.log(tg);
+
         if (tg === t) {
             return true;
         } else {
@@ -105,10 +105,7 @@ export function getByVal(v, cbid, ROT = false) {
         ddlArray.push(ddl.options[i].value);
     }
 
-    console.log(ddlArray);
-
     const tmp = ddlArray.forEach((itm, i) => {
-        console.log(itm);
         if (itm.value === v) {
             res = i;
             return true;

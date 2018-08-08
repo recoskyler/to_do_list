@@ -13,7 +13,7 @@ import {Item} from './Scripts/Item';
 import {Tag} from './Scripts/Tag'
 import listImage from './Images/listPic.png';
 import {variables} from './Helpers/variables';
-import {getFormattedCurrentDateTime, existsInArray, saveTasks, loadTasks, saveTags, loadTags, tagExists, getByVal} from './Helpers/functions';
+import {getFormattedCurrentDateTime, existsInArray, saveTasks, loadTasks, saveTags, loadTags, tagExists} from './Helpers/functions';
 
 let currentTaskId = 0;
 let editMode      = false;
@@ -138,7 +138,7 @@ export class List extends React.Component {
             t = null;
         }
 
-        console.log(t);
+        console.log(i);
         
         return (
             <div id="gridCont">
@@ -250,8 +250,7 @@ export class List extends React.Component {
     addTag(e) {
         e = document.getElementById(variables.tagBoxId);
         let tmp = JSON.parse(JSON.stringify( this.state.tags ));
-        console.log(tmp);
-        console.log(e.value);
+
         if (e.value === "" || e.value === null || e.value === undefined || tmp.includes(e.value.toString())) {
             document.getElementById(variables.tagBoxId).value = "";
             document.getElementById(variables.tagBoxId).placeholder = variables.invalidTagPlaceholder;
@@ -266,7 +265,6 @@ export class List extends React.Component {
         }
 
         tmp.push(e.value);
-        console.log(tmp);
         this.setState({tags:tmp});
         saveTags(tmp);
         document.getElementById(variables.tagBoxId).value = "";
@@ -301,7 +299,7 @@ export class List extends React.Component {
         }
         
         let e = document.getElementById(variables.tagComboId);
-        let itemTag = e.options[e.selectedIndex].value;
+        let itemTag = e.options[e.selectedIndex].text;
         
         if (itemTag === null || itemTag === undefined || itemTag === "-1") {
             itemTag = 3;
