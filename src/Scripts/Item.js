@@ -9,7 +9,6 @@ import '../index.css';
 import {variables} from '../Helpers/variables';
 import tCanImg from '../Images/tCan.png';
 import editImg from '../Images/editPic.png';
-import { getByVal } from '../Helpers/functions';
 
 export class Item extends React.Component {
     constructor(props) {

@@ -9,15 +9,15 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
-import {Item} from './Scripts/Item';
-import {Tag} from './Scripts/Tag'
+import { Item } from './Scripts/Item';
+import { Tag } from './Scripts/Tag'
 import listImage from './Images/listPic.png';
-import {variables} from './Helpers/variables';
-import {getFormattedCurrentDateTime, existsInArray, saveTasks, loadTasks, saveTags, loadTags, tagExists} from './Helpers/functions';
+import { variables } from './Helpers/variables';
+import { getFormattedCurrentDateTime, existsInArray, saveTasks, loadTasks, saveTags, loadTags, tagExists } from './Helpers/functions';
 
 let currentTaskId = 0;
-let editMode      = false;
-let tagEditMode   = 1;
+let editMode = false;
+let tagEditMode = 1;
 
 export class List extends React.Component {
     constructor(props) {
@@ -25,7 +25,7 @@ export class List extends React.Component {
         this.changeStyle = this.changeStyle.bind(this);
         this.getTasks = this.getTasks.bind(this);
         this.addTask = this.addTask.bind(this);
-        this.state = {tasks:[], tags:[]};
+        this.state = { tasks: [], tags: [] };
         this.setState = this.setState.bind(this);
         this.handleClick = this.handleClick.bind(this);
         this.addListener = this.addListener.bind(this);
@@ -38,30 +38,40 @@ export class List extends React.Component {
         this.deleteTag = this.deleteTag.bind(this);
         this.handleTagClick = this.handleTagClick.bind(this);
     }
-    
+
     editItem(tid) {
         editMode = true;
         currentTaskId = tid;
-        let tmp = JSON.parse(JSON.stringify( this.state.tasks ));
+        let tmp = JSON.parse(JSON.stringify(this.state.tasks));
+        let e = document.getElementById(variables.tagComboId).options;
+        let index = 0;
+
+        for (let i = 0; i < e.length; i++) {
+            if (e[i].text === tmp[tid].tag) {
+                index = e[i].value;
+                break;
+            }
+        }
+
         document.getElementById(variables.inputBoxId).value = tmp[tid].val;
         document.getElementById(variables.buttonId).innerHTML = "Save";
-        document.getElementById(variables.tagComboId).value = tmp[tid].tag;
+        document.getElementById(variables.tagComboId).value = index;
         document.getElementById(variables.buttonId).onClick = this.saveChanges;
-        document.getElementById(variables.inputBoxId).addEventListener("keyup", function(event) {
+        document.getElementById(variables.inputBoxId).addEventListener("keyup", function (event) {
             event.preventDefault();
             if (event.keyCode === 13) {
                 document.getElementById(variables.buttonId).click();
             }
         });
     }
-    
-    saveChanges(tsk) {        
-        if (tsk.replace(/ /g,'') === "" || tsk === null || tsk === undefined) {
+
+    saveChanges(tsk) {
+        if (tsk.replace(/ /g, '') === "" || tsk === null || tsk === undefined) {
             document.getElementById(variables.inputBoxId).value = "";
             document.getElementById(variables.inputBoxId).placeholder = variables.invalidEditPlaceholder;
             document.getElementById(variables.inputBoxId).className = variables.invalidTaskClassName;
-            setTimeout(function(){ 
-                document.getElementById(variables.inputBoxId).placeholder = variables.defaultEditPlaceholder; 
+            setTimeout(function () {
+                document.getElementById(variables.inputBoxId).placeholder = variables.defaultEditPlaceholder;
                 document.getElementById(variables.inputBoxId).className = "";
             }, 3000);
             editMode = true;
@@ -69,44 +79,43 @@ export class List extends React.Component {
         } else {
             document.getElementById(variables.inputBoxId).placeholder = variables.defaultEditPlaceholder;
         }
-        
-        let tmp = JSON.parse(JSON.stringify( this.state.tasks ));
+
+        let tmp = JSON.parse(JSON.stringify(this.state.tasks));
         let e = document.getElementById(variables.tagComboId);
         tmp[currentTaskId].val = tsk;
-        tmp[currentTaskId].tag = e.options[e.selectedIndex].value;
-        this.setState({tasks:tmp});
+        tmp[currentTaskId].tag = e.options[e.selectedIndex].text;
+        this.setState({ tasks: tmp });
         document.getElementById(variables.inputBoxId).value = "";
         document.getElementById(variables.buttonId).innerHTML = "Add";
         document.getElementById(variables.buttonId).onClick = this.handleClick;
         document.getElementById(variables.inputBoxId).placeholder = variables.savedPlaceholder;
         document.getElementById(variables.inputBoxId).className = variables.savedClass;
-        document.getElementById(variables.tagComboId).value = "0";
-        editMode = false; 
-        setTimeout(function(){ 
-                document.getElementById(variables.inputBoxId).placeholder = variables.defaultPlaceholder; 
-                document.getElementById(variables.inputBoxId).className = "";
+        editMode = false;
+        setTimeout(function () {
+            document.getElementById(variables.inputBoxId).placeholder = variables.defaultPlaceholder;
+            document.getElementById(variables.inputBoxId).className = "";
         }, 1000);
-        
+
         saveTasks(tmp);
     }
-    
+
     deleteTask(tid) {
-        let tmp = JSON.parse(JSON.stringify( this.state.tasks ));     
+        let tmp = JSON.parse(JSON.stringify(this.state.tasks));
         tmp.splice(tid, 1);
-        this.setState({tasks:tmp});
+        this.setState({ tasks: tmp });
         saveTasks(tmp);
     }
-    
+
     componentDidMount() {
         this.addListener();
-        this.setState({tasks: loadTasks(), tags: loadTags()});
+        this.setState({ tasks: loadTasks(), tags: loadTags() });
 
         document.getElementById(variables.tagComboId).value = "0";
     }
 
     addListener() {
         var input = document.getElementById(variables.inputBoxId);
-        input.addEventListener("keyup", function(event) {
+        input.addEventListener("keyup", function (event) {
             event.preventDefault();
             if (event.keyCode === 13) {
                 document.getElementById(variables.buttonId).click();
@@ -114,7 +123,7 @@ export class List extends React.Component {
         });
 
         input = document.getElementById(variables.tagBoxId);
-        input.addEventListener("keyup", function(event) {
+        input.addEventListener("keyup", function (event) {
             event.preventDefault();
             if (event.keyCode === 13) {
                 document.getElementById(variables.tagButtonId).click();
@@ -126,10 +135,10 @@ export class List extends React.Component {
         if (editMode) {
             this.saveChanges(document.getElementById(variables.inputBoxId).value.toString())
         } else {
-            this.addTask(document.getElementById(variables.inputBoxId).value.toString());   
+            this.addTask(document.getElementById(variables.inputBoxId).value.toString());
         }
     }
-    
+
     render() {
         const i = this.getTasks(this.state.tasks);
         let t = this.getTags(this.state.tags);
@@ -138,8 +147,6 @@ export class List extends React.Component {
             t = null;
         }
 
-        console.log(i);
-        
         return (
             <div id="gridCont">
                 <div id="pageTitle" className="box">
@@ -181,9 +188,9 @@ export class List extends React.Component {
             this.addTag("");
         }
     }
-    
+
     deleteTag(e) {
-        let tmp = JSON.parse(JSON.stringify( this.state.tags ));
+        let tmp = JSON.parse(JSON.stringify(this.state.tags));
         e = document.getElementById(variables.tagEditComboId);
         const index = e.selectedIndex
 
@@ -191,8 +198,8 @@ export class List extends React.Component {
             document.getElementById(variables.tagBoxId).value = "";
             document.getElementById(variables.tagBoxId).placeholder = variables.invalidTagDelPlaceholder + " " + e.options[index].text;
             document.getElementById(variables.tagBoxId).className = variables.invalidTaskClassName;
-            setTimeout(function(){ 
-                document.getElementById(variables.tagBoxId).placeholder = variables.defaultTagPlaceholder; 
+            setTimeout(function () {
+                document.getElementById(variables.tagBoxId).placeholder = variables.defaultTagPlaceholder;
                 document.getElementById(variables.tagBoxId).className = "";
             }, 4000);
             return false;
@@ -201,10 +208,10 @@ export class List extends React.Component {
             document.getElementById(variables.tagBoxId).value = "";
         }
         tmp.splice(index, 1);
-        this.setState({tags:tmp});
+        this.setState({ tags: tmp });
         saveTags(tmp);
     }
-    
+
     checkEdit(e) {
         e = document.getElementById(variables.tagComboId);
         if (e.options[e.selectedIndex].value === "edit") {
@@ -224,7 +231,7 @@ export class List extends React.Component {
             document.getElementById(variables.tagBoxId).disabled = false;
         }
     }
-    
+
     changeTagEditMode(e) {
         e = document.getElementById(variables.tagEditComboId);
         if (e.options[e.selectedIndex].value === "addnew") {
@@ -234,10 +241,10 @@ export class List extends React.Component {
             tagEditMode = 1;
             document.getElementById(variables.tagBoxId).disabled = true;
         }
-        
+
         let btnText = tagEditMode === 2 ? "Add Tag" : "Delete Tag";
-        let func    = tagEditMode === 2 ? this.deleteTag : this.addTag;
-        document.getElementById(variables.tagButtonId).innerHTML = btnText; 
+        let func = tagEditMode === 2 ? this.deleteTag : this.addTag;
+        document.getElementById(variables.tagButtonId).innerHTML = btnText;
         document.getElementById(variables.tagButtonId).onClick = func;
 
         if (e.options[e.selectedIndex].value === "other") {
@@ -246,17 +253,17 @@ export class List extends React.Component {
             document.getElementById(variables.tagButtonId).disabled = false;
         }
     }
-    
+
     addTag(e) {
         e = document.getElementById(variables.tagBoxId);
-        let tmp = JSON.parse(JSON.stringify( this.state.tags ));
+        let tmp = JSON.parse(JSON.stringify(this.state.tags));
 
         if (e.value === "" || e.value === null || e.value === undefined || tmp.includes(e.value.toString())) {
             document.getElementById(variables.tagBoxId).value = "";
             document.getElementById(variables.tagBoxId).placeholder = variables.invalidTagPlaceholder;
             document.getElementById(variables.tagBoxId).className = variables.invalidTaskClassName;
-            setTimeout(function(){ 
-                document.getElementById(variables.tagBoxId).placeholder = variables.defaultTagPlaceholder; 
+            setTimeout(function () {
+                document.getElementById(variables.tagBoxId).placeholder = variables.defaultTagPlaceholder;
                 document.getElementById(variables.tagBoxId).className = "";
             }, 3000);
             return false;
@@ -265,81 +272,80 @@ export class List extends React.Component {
         }
 
         tmp.push(e.value);
-        this.setState({tags:tmp});
+        this.setState({ tags: tmp });
         saveTags(tmp);
         document.getElementById(variables.tagBoxId).value = "";
     }
 
     changeStyle(s, k) {
-        let tmp = JSON.parse(JSON.stringify( this.state.tasks ));
+        let tmp = JSON.parse(JSON.stringify(this.state.tasks));
         tmp[k].style = s === "regularStyle" ? "checkedStyle" : "regularStyle";
         tmp[k].checked = s === "checkedStyle" ? false : true;
         tmp[k].checkedTime = getFormattedCurrentDateTime(tmp[k].checked);
-        this.setState({tasks:tmp});
+        this.setState({ tasks: tmp });
         saveTasks(tmp);
     }
-    
+
     addTask(tsk) {
-        if (existsInArray(tsk.toLowerCase().replace(/ /g,''), this.state.tasks)) {
+        if (existsInArray(tsk.toLowerCase().replace(/ /g, ''), this.state.tasks)) {
             document.getElementById(variables.inputBoxId).value = "";
             document.getElementById(variables.inputBoxId).placeholder = variables.invalidPlaceholder;
             document.getElementById(variables.inputBoxId).className = variables.invalidTaskClassName;
-            setTimeout(function(){ 
-                document.getElementById(variables.inputBoxId).placeholder = variables.defaultPlaceholder; 
+            setTimeout(function () {
+                document.getElementById(variables.inputBoxId).placeholder = variables.defaultPlaceholder;
                 document.getElementById(variables.inputBoxId).className = "";
             }, 1000);
             return false;
         } else {
             document.getElementById(variables.inputBoxId).placeholder = variables.defaultPlaceholder;
         }
-        
-        if (tsk.replace(/ /g,'') === "" || tsk === null || tsk === undefined) {
+
+        if (tsk.replace(/ /g, '') === "" || tsk === null || tsk === undefined) {
             document.getElementById(variables.inputBoxId).value = "";
             return false;
         }
-        
+
         let e = document.getElementById(variables.tagComboId);
         let itemTag = e.options[e.selectedIndex].text;
-        
+
         if (itemTag === null || itemTag === undefined || itemTag === "-1") {
             itemTag = 3;
         }
-        
-        let tmp = JSON.parse(JSON.stringify( this.state.tasks ));
-        tmp.push({val:tsk, checked:false, style:"regularStyle", added:getFormattedCurrentDateTime(false), checkedTime:getFormattedCurrentDateTime(true), tag:itemTag});
-        this.setState({tasks:tmp});
+
+        let tmp = JSON.parse(JSON.stringify(this.state.tasks));
+        tmp.push({ val: tsk, checked: false, style: "regularStyle", added: getFormattedCurrentDateTime(false), checkedTime: getFormattedCurrentDateTime(true), tag: itemTag });
+        this.setState({ tasks: tmp });
         document.getElementById(variables.inputBoxId).value = "";
         document.getElementById(variables.inputBoxId).placeholder = variables.addedPlaceholder;
         document.getElementById(variables.inputBoxId).className = variables.addedClass;
-        
-        setTimeout(function(){ 
-                document.getElementById(variables.inputBoxId).placeholder = variables.defaultEditPlaceholder; 
-                document.getElementById(variables.inputBoxId).className = "";
+
+        setTimeout(function () {
+            document.getElementById(variables.inputBoxId).placeholder = variables.defaultEditPlaceholder;
+            document.getElementById(variables.inputBoxId).className = "";
         }, 1000);
-        
+
         saveTasks(tmp);
     }
-    
+
     getTasks(items) {
         const tempItems = items.map((itm, i) => {
             return (
-                <Item onEdit={this.editItem} time={itm.added} onDel={this.deleteTask} value={itm.val} cs={itm.style} onChange={this.changeStyle} checkedState={itm.checked} key={i} id={i} checkTime={itm.checkedTime} tag={itm.tag}/>
+                <Item onEdit={this.editItem} time={itm.added} onDel={this.deleteTask} value={itm.val} cs={itm.style} onChange={this.changeStyle} checkedState={itm.checked} key={i} id={i} checkTime={itm.checkedTime} tag={itm.tag} />
             );
         });
-        
+
         if (tempItems.length >= 1) {
             return tempItems;
         } else {
             return [];
         }
-        
+
     }
 
     componentDidUpdate() {
-        this.checkEdit();
         this.changeTagEditMode();
     }
-    
+
     getTags(items) {
         const tempTags = items.map((t, i) => {
             if (t === "Other") {
@@ -347,16 +353,16 @@ export class List extends React.Component {
             }
 
             return (
-                <Tag val={t} id={i} key={i}/>
+                <Tag val={t} id={i} key={i} />
             );
         });
-        
+
         if (tempTags.length >= 1) {
             return tempTags;
         } else {
             return null;
         }
-        
+
     }
 }
 
