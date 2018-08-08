@@ -9,6 +9,7 @@ import '../index.css';
 import {variables} from '../Helpers/variables';
 import tCanImg from '../Images/tCan.png';
 import editImg from '../Images/editPic.png';
+import { getByVal } from '../Helpers/functions';
 
 export class Item extends React.Component {
     constructor(props) {
@@ -56,7 +57,7 @@ export class Item extends React.Component {
                     </label>
                 </div>
                 <div className={tagClass}>
-                    <span>{document.getElementById("tags").options[this.props.tag].text}</span>
+                    <span>{getByVal(this.props.tag, variables.tagComboId, false)}</span>
                 </div>
                 <div>
                     <img onClick={this.handleEdit} className="ePen" src={editImg} alt="Edit"/>   

@@ -1,8 +1,10 @@
-/*===============================================
+/*
+//===============================================
 // Title:  To-Do List Stylesheet
 // Author: Adil Atalay Hamamcioglu (Recoskyler)
 // Date:   August 2018
-//===============================================*/
+//===============================================
+*/
 
 @media only screen and (max-width: 768px) {
     html, body {
@@ -52,9 +54,6 @@
         display:inline;
         position:relative;
         padding:0;
-        width:60px;
-        height:auto;
-        float:left;
         margin:0px;
     }
 
@@ -65,7 +64,6 @@
         margin:0;
         font-size:10px;
         text-align: right;
-        float:right;
         padding:0;
         margin:40px 5px 0 0;
     }
@@ -693,7 +691,7 @@
     display: block;
 }
 
-#tagBtn:hover {
+#tagBtn:hover:enabled {
     animation-name: changeButton;
     animation-duration: 0.3s;
     border-color:#F50057;
@@ -759,8 +757,9 @@
   100% { opacity: 1; }
 }
 
-#inputBtn:disabled , #inputBox:disabled , #newTagBox:disabled {
+#inputBtn:disabled , #inputBox:disabled , #newTagBox:disabled , #tagBtn:disabled {
     color:#424242;
     border-color:#424242;
     background-color: #FAFAFA;
+    cursor:not-allowed;
 }

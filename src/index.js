@@ -13,11 +13,11 @@ import {Item} from './Scripts/Item';
 import {Tag} from './Scripts/Tag'
 import listImage from './Images/listPic.png';
 import {variables} from './Helpers/variables';
-import {getFormattedCurrentDateTime, existsInArray, saveTasks, loadTasks} from './Helpers/functions';
+import {getFormattedCurrentDateTime, existsInArray, saveTasks, loadTasks, saveTags, loadTags, tagExists, getByVal} from './Helpers/functions';
 
 let currentTaskId = 0;
 let editMode      = false;
-let tagEditMode   = 0;
+let tagEditMode   = 1;
 
 export class List extends React.Component {
     constructor(props) {
@@ -25,7 +25,7 @@ export class List extends React.Component {
         this.changeStyle = this.changeStyle.bind(this);
         this.getTasks = this.getTasks.bind(this);
         this.addTask = this.addTask.bind(this);
-        this.state = {tasks:[], tags:["Home", "Work", "School", "Other"]};
+        this.state = {tasks:[], tags:[]};
         this.setState = this.setState.bind(this);
         this.handleClick = this.handleClick.bind(this);
         this.addListener = this.addListener.bind(this);
@@ -36,6 +36,7 @@ export class List extends React.Component {
         this.checkEdit = this.checkEdit.bind(this)
         this.changeTagEditMode = this.changeTagEditMode.bind(this);
         this.deleteTag = this.deleteTag.bind(this);
+        this.handleTagClick = this.handleTagClick.bind(this);
     }
     
     editItem(tid) {
@@ -98,7 +99,9 @@ export class List extends React.Component {
     
     componentDidMount() {
         this.addListener();
-        this.setState({tasks: loadTasks()});
+        this.setState({tasks: loadTasks(), tags: loadTags()});
+
+        document.getElementById(variables.tagComboId).value = "0";
     }
 
     addListener() {
@@ -107,6 +110,14 @@ export class List extends React.Component {
             event.preventDefault();
             if (event.keyCode === 13) {
                 document.getElementById(variables.buttonId).click();
+            }
+        });
+
+        input = document.getElementById(variables.tagBoxId);
+        input.addEventListener("keyup", function(event) {
+            event.preventDefault();
+            if (event.keyCode === 13) {
+                document.getElementById(variables.tagButtonId).click();
             }
         });
     }
@@ -121,8 +132,12 @@ export class List extends React.Component {
     
     render() {
         const i = this.getTasks(this.state.tasks);
-        const t = this.getTags(this.state.tags);
-        
+        let t = this.getTags(this.state.tags);
+
+        if (t === null || t === undefined) {
+            t = null;
+        }
+
         console.log(t);
         
         return (
@@ -144,12 +159,12 @@ export class List extends React.Component {
                 </div>
                 <div id="newTagContainer">
                     <div>
-                        <input id={variables.tagBoxId} type="text" placeholder="New Tag Name" />
+                        <input id={variables.tagBoxId} type="text" placeholder={variables.defaultTagPlaceholder} />
                         <select id={variables.tagEditComboId} onChange={this.changeTagEditMode}>
                             {t}
                             <option value="addnew">Add New</option>
                         </select>
-                        <button id={variables.tagButtonId} onClick={this.deleteTag}>Delete Tag</button>
+                        <button id={variables.tagButtonId} onClick={this.handleTagClick}>Delete Tag</button>
                     </div>
                 </div>
                 <div id="listContainer">
@@ -158,9 +173,36 @@ export class List extends React.Component {
             </div>
         );
     }
+
+    handleTagClick(e) {
+        if (tagEditMode === 1) {
+            this.deleteTag("");
+        } else {
+            this.addTag("");
+        }
+    }
     
     deleteTag(e) {
-        
+        let tmp = JSON.parse(JSON.stringify( this.state.tags ));
+        e = document.getElementById(variables.tagEditComboId);
+        const index = e.selectedIndex
+
+        if (tagExists(e.options[index].text, this.state.tasks, this.state.tags) || e.options[index].value === "other") {
+            document.getElementById(variables.tagBoxId).value = "";
+            document.getElementById(variables.tagBoxId).placeholder = variables.invalidTagDelPlaceholder + " " + e.options[index].text;
+            document.getElementById(variables.tagBoxId).className = variables.invalidTaskClassName;
+            setTimeout(function(){ 
+                document.getElementById(variables.tagBoxId).placeholder = variables.defaultTagPlaceholder; 
+                document.getElementById(variables.tagBoxId).className = "";
+            }, 4000);
+            return false;
+        } else {
+            document.getElementById(variables.tagBoxId).placeholder = variables.defaultPlaceholder;
+            document.getElementById(variables.tagBoxId).value = "";
+        }
+        tmp.splice(index, 1);
+        this.setState({tags:tmp});
+        saveTags(tmp);
     }
     
     checkEdit(e) {
@@ -169,12 +211,11 @@ export class List extends React.Component {
             document.getElementById("newTagContainer").style.display = "block";
             document.getElementById(variables.inputBoxId).disabled = true;
             document.getElementById(variables.buttonId).disabled = true;
-            tagEditMode = 1;
+            this.changeTagEditMode("");
         } else {
             document.getElementById("newTagContainer").style.display = "none";
             document.getElementById(variables.inputBoxId).disabled = false;
             document.getElementById(variables.buttonId).disabled = false;
-            tagEditMode = 0;
         }
 
         if (tagEditMode === 1) {
@@ -195,12 +236,40 @@ export class List extends React.Component {
         }
         
         let btnText = tagEditMode === 2 ? "Add Tag" : "Delete Tag";
-        let func    = tagEditMode === 2 ? this.addTag : this.deleteTag;
+        let func    = tagEditMode === 2 ? this.deleteTag : this.addTag;
         document.getElementById(variables.tagButtonId).innerHTML = btnText; 
+        document.getElementById(variables.tagButtonId).onClick = func;
+
+        if (e.options[e.selectedIndex].value === "other") {
+            document.getElementById(variables.tagButtonId).disabled = true;
+        } else {
+            document.getElementById(variables.tagButtonId).disabled = false;
+        }
     }
     
     addTag(e) {
-        e = document.getElementById(variables.tagEditComboId);
+        e = document.getElementById(variables.tagBoxId);
+        let tmp = JSON.parse(JSON.stringify( this.state.tags ));
+        console.log(tmp);
+        console.log(e.value);
+        if (e.value === "" || e.value === null || e.value === undefined || tmp.includes(e.value.toString())) {
+            document.getElementById(variables.tagBoxId).value = "";
+            document.getElementById(variables.tagBoxId).placeholder = variables.invalidTagPlaceholder;
+            document.getElementById(variables.tagBoxId).className = variables.invalidTaskClassName;
+            setTimeout(function(){ 
+                document.getElementById(variables.tagBoxId).placeholder = variables.defaultTagPlaceholder; 
+                document.getElementById(variables.tagBoxId).className = "";
+            }, 3000);
+            return false;
+        } else {
+            document.getElementById(variables.tagBoxId).placeholder = variables.defaultPlaceholder;
+        }
+
+        tmp.push(e.value);
+        console.log(tmp);
+        this.setState({tags:tmp});
+        saveTags(tmp);
+        document.getElementById(variables.tagBoxId).value = "";
     }
 
     changeStyle(s, k) {
@@ -267,24 +336,37 @@ export class List extends React.Component {
         }
         
     }
+
+    componentDidUpdate() {
+        this.checkEdit();
+        this.changeTagEditMode();
+    }
     
     getTags(items) {
         const tempTags = items.map((t, i) => {
+            if (t === "Other") {
+                i = "other";
+            }
+
             return (
                 <Tag val={t} id={i} key={i}/>
             );
         });
         
-        console.log(tempTags);
-        
         if (tempTags.length >= 1) {
             return tempTags;
         } else {
-            return [];
+            return null;
         }
         
     }
 }
+
+//Uncomment this to clear local storage
+
+//localStorage.clear();
+
+//
 
 ReactDOM.render(<App />, document.getElementById('root'));
 ReactDOM.render(<List />, document.getElementById('cont'));

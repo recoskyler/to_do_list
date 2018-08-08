@@ -4,7 +4,7 @@
 // Date:   August 2018
 //===============================================
 
-import {variables} from './variables';
+import { variables } from './variables';
 
 export function getFormattedCurrentDateTime(COrA = false) {
     const fW = COrA === true ? "Checked  " : "Added  ";
@@ -19,8 +19,8 @@ export function getCurrentDateTime() {
 }
 
 export function getCurrentDate() {
-    let currentdate = new Date(); 
-    const cdate = currentdate.getDate() + "/" + (currentdate.getMonth()+1)  + "/" + currentdate.getFullYear();
+    let currentdate = new Date();
+    const cdate = currentdate.getDate() + "/" + (currentdate.getMonth() + 1) + "/" + currentdate.getFullYear();
 
     return cdate;
 }
@@ -34,10 +34,10 @@ export function getCurrentTime() {
 
 export function existsInArray(itm, arr) {
     if (arr === undefined || arr === null || arr.length === 0) {
-        return false;    
+        return false;
     }
 
-    let tmp = JSON.parse(JSON.stringify( arr ));
+    let tmp = JSON.parse(JSON.stringify(arr));
 
     const res = tmp.some((t) => {
         if (t.val === itm) {
@@ -52,7 +52,7 @@ export function existsInArray(itm, arr) {
 
 export function loadTasks() {
     let obj = JSON.parse(localStorage.getItem(variables.keyName));
-    
+
     if (obj === null || obj === undefined || obj.length === 0) {
         return [];
     }
@@ -61,4 +61,65 @@ export function loadTasks() {
 
 export function saveTasks(t) {
     localStorage.setItem(variables.keyName, JSON.stringify(t));
+}
+
+export function saveTags(t) {
+    localStorage.setItem(variables.tagKeyName, JSON.stringify(t));
+}
+
+export function loadTags() {
+    let obj = JSON.parse(localStorage.getItem(variables.tagKeyName));
+
+    if (obj === null || obj === undefined || obj.length === 0) {
+        return ["Other"];
+    }
+
+    if (!obj.includes("Other")) {
+        obj.push("Other");
+    }
+
+    return obj;
+}
+
+export function tagExists(t, arr, tArr) {
+    if (arr === undefined || arr === null || arr.length === 0) {
+        return false;
+    }
+
+    return arr.some((tt) => {
+        let tg = getByVal(tt.tag, variables.tagComboId);
+        console.log(tg);
+        if (tg === t) {
+            return true;
+        } else {
+            return false;
+        }
+    });
+}
+
+export function getByVal(v, cbid, ROT = false) {
+    let res = 0;
+    let ddlArray = [];
+    const ddl = document.getElementById(cbid);
+    for (let i = 0; i < ddl.options.length; i++) {
+        ddlArray.push(ddl.options[i].value);
+    }
+
+    console.log(ddlArray);
+
+    const tmp = ddlArray.forEach((itm, i) => {
+        console.log(itm);
+        if (itm.value === v) {
+            res = i;
+            return true;
+        } else {
+            return false;
+        }
+    });
+
+    if (ROT) {
+        return res;
+    }
+
+    return ddl.options[res].text;
 }
