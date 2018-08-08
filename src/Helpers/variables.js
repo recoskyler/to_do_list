@@ -8,7 +8,7 @@ export const variables = {
     defaultPlaceholder       : "Type task here",
     invalidPlaceholder       : "Already added",
     inputBoxId               : "inputBox",
-    invalidTaskClassName     : "invalidTask",
+    invalidTaskClassName     : "roundBox roundTextBox invalidTask",
     buttonId                 : "inputBtn",
     dateBoxId                : "dateBox",
     checkedStyle             : {textDecoration:"line-through",fontStyle:"italic",color:"#9e9e9e"},
@@ -17,9 +17,9 @@ export const variables = {
     defaultEditPlaceholder   : "Type edited task here",
     recoskylerLink           : "https://github.com/recoskyler",
     savedPlaceholder         : "Saved",
-    savedClass               : "saved",
+    savedClass               : "roundBox roundTextBox saved",
     addedPlaceholder         : "Added",
-    addedClass               : "saved",
+    addedClass               : "roundBox roundTextBox saved",
     keyName                  : "tasks",
     tagComboId               : "tags",
     tagEditComboId           : "tagsE",
@@ -29,5 +29,6 @@ export const variables = {
     invalidTagPlaceholder    : "Please type a valid tag name",
     defaultTagPlaceholder    : "New tag name",
     invalidTagDelPlaceholder : "Please delete all tasks tagged",
-    tagMaxLength             : 8
+    tagMaxLength             : 8,
+    defaultClasses           : "roundBox roundTextBox"
 };

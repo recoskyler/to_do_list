@@ -69,10 +69,10 @@ export class List extends React.Component {
         if (tsk.replace(/ /g, '') === "" || tsk === null || tsk === undefined) {
             document.getElementById(variables.inputBoxId).value = "";
             document.getElementById(variables.inputBoxId).placeholder = variables.invalidEditPlaceholder;
-            document.getElementById(variables.inputBoxId).className = variables.invalidTaskClassName;
+            document.getElementById(variables.inputBoxId).className = variables.defaultClasses + " " + variables.invalidTaskClassName;
             setTimeout(function () {
                 document.getElementById(variables.inputBoxId).placeholder = variables.defaultEditPlaceholder;
-                document.getElementById(variables.inputBoxId).className = "";
+                document.getElementById(variables.inputBoxId).className = variables.defaultClasses;
             }, 3000);
             editMode = true;
             return false;
@@ -89,11 +89,11 @@ export class List extends React.Component {
         document.getElementById(variables.buttonId).innerHTML = "Add";
         document.getElementById(variables.buttonId).onClick = this.handleClick;
         document.getElementById(variables.inputBoxId).placeholder = variables.savedPlaceholder;
-        document.getElementById(variables.inputBoxId).className = variables.savedClass;
+        document.getElementById(variables.inputBoxId).className = variables.defaultClasses + " " + variables.savedClass;
         editMode = false;
         setTimeout(function () {
             document.getElementById(variables.inputBoxId).placeholder = variables.defaultPlaceholder;
-            document.getElementById(variables.inputBoxId).className = "";
+            document.getElementById(variables.inputBoxId).className = variables.defaultClasses;
         }, 1000);
 
         saveTasks(tmp);
@@ -156,22 +156,22 @@ export class List extends React.Component {
                 </div>
                 <div id="newContainer">
                     <div>
-                        <input id={variables.inputBoxId} type="text" placeholder={variables.defaultPlaceholder} />
-                        <select id={variables.tagComboId} onChange={this.checkEdit}>
+                        <input className={variables.defaultClasses} id={variables.inputBoxId} type="text" placeholder={variables.defaultPlaceholder} />
+                        <select className="roundBox comboBox" id={variables.tagComboId} onChange={this.checkEdit}>
                             {t}
                             <option value="edit">Edit Tags</option>
                         </select>
-                        <button id={variables.buttonId} onClick={this.handleClick}>Add</button>
+                        <button className="roundBox roundButton" id={variables.buttonId} onClick={this.handleClick}>Add</button>
                     </div>
                 </div>
                 <div id="newTagContainer">
                     <div>
-                        <input id={variables.tagBoxId} type="text" placeholder={variables.defaultTagPlaceholder} maxLength={variables.tagMaxLength} />
-                        <select id={variables.tagEditComboId} onChange={this.changeTagEditMode}>
+                        <input className={variables.defaultClasses} id={variables.tagBoxId} type="text" placeholder={variables.defaultTagPlaceholder} maxLength={variables.tagMaxLength} />
+                        <select className="roundBox comboBox" id={variables.tagEditComboId} onChange={this.changeTagEditMode}>
                             {t}
                             <option value="addnew">Add New</option>
                         </select>
-                        <button id={variables.tagButtonId} onClick={this.handleTagClick}>Delete Tag</button>
+                        <button className="roundBox roundButton" id={variables.tagButtonId} onClick={this.handleTagClick}>Delete Tag</button>
                     </div>
                 </div>
                 <div id="listContainer">
@@ -197,10 +197,10 @@ export class List extends React.Component {
         if (tagExists(e.options[index].text, this.state.tasks) || e.options[index].value === "other") {
             document.getElementById(variables.tagBoxId).value = "";
             document.getElementById(variables.tagBoxId).placeholder = variables.invalidTagDelPlaceholder + " " + e.options[index].text;
-            document.getElementById(variables.tagBoxId).className = variables.invalidTaskClassName;
+            document.getElementById(variables.tagBoxId).className = variables.defaultClasses + " " + variables.invalidTaskClassName;
             setTimeout(function () {
                 document.getElementById(variables.tagBoxId).placeholder = variables.defaultTagPlaceholder;
-                document.getElementById(variables.tagBoxId).className = "";
+                document.getElementById(variables.tagBoxId).className = variables.defaultClasses;
             }, 4000);
             return false;
         } else {
@@ -261,10 +261,10 @@ export class List extends React.Component {
         if (e.value === "" || e.value === null || e.value === undefined || tmp.includes(e.value.toString())) {
             document.getElementById(variables.tagBoxId).value = "";
             document.getElementById(variables.tagBoxId).placeholder = variables.invalidTagPlaceholder;
-            document.getElementById(variables.tagBoxId).className = variables.invalidTaskClassName;
+            document.getElementById(variables.tagBoxId).className = variables.defaultClasses + " " + variables.invalidTaskClassName;
             setTimeout(function () {
                 document.getElementById(variables.tagBoxId).placeholder = variables.defaultTagPlaceholder;
-                document.getElementById(variables.tagBoxId).className = "";
+                document.getElementById(variables.tagBoxId).className = variables.defaultClasses;
             }, 3000);
             return false;
         } else {
@@ -290,10 +290,10 @@ export class List extends React.Component {
         if (existsInArray(tsk.toLowerCase().replace(/ /g, ''), this.state.tasks)) {
             document.getElementById(variables.inputBoxId).value = "";
             document.getElementById(variables.inputBoxId).placeholder = variables.invalidPlaceholder;
-            document.getElementById(variables.inputBoxId).className = variables.invalidTaskClassName;
+            document.getElementById(variables.inputBoxId).className = variables.defaultClasses + " " + variables.invalidTaskClassName;
             setTimeout(function () {
                 document.getElementById(variables.inputBoxId).placeholder = variables.defaultPlaceholder;
-                document.getElementById(variables.inputBoxId).className = "";
+                document.getElementById(variables.inputBoxId).className = variables.defaultClasses;
             }, 1000);
             return false;
         } else {
@@ -317,11 +317,11 @@ export class List extends React.Component {
         this.setState({ tasks: tmp });
         document.getElementById(variables.inputBoxId).value = "";
         document.getElementById(variables.inputBoxId).placeholder = variables.addedPlaceholder;
-        document.getElementById(variables.inputBoxId).className = variables.addedClass;
+        document.getElementById(variables.inputBoxId).className = variables.defaultClasses + " " + variables.addedClass;
 
         setTimeout(function () {
             document.getElementById(variables.inputBoxId).placeholder = variables.defaultEditPlaceholder;
-            document.getElementById(variables.inputBoxId).className = "";
+            document.getElementById(variables.inputBoxId).className = variables.defaultClasses;
         }, 1000);
 
         saveTasks(tmp);

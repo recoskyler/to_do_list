@@ -119,12 +119,9 @@
         margin-left:20px;
     }
 
-    #inputBox , #newTagBox {
+    .roundTextBox {
         font-size: 14px;
-        outline: none;
         width:75%;
-        border:2px solid #283593;
-        border-radius: 22px;
         padding-left:5px;
         padding-right:5px;
         margin-left:10px;
@@ -142,15 +139,9 @@
         margin:10px 0 0 0;
     }
 
-    #inputBtn , #tagBtn {
-        border:2px solid #283593;
+    .roundButton {
         font-Size:14px;
-        outline:none;
         padding:5px 10px 5px 10px;
-        border-radius:22px;
-        font-weight: bold;
-        background-color: white;
-        color:#283593;
         width:100%;
     }
     .tCan {
@@ -200,17 +191,11 @@
         color: #505050;
     }
 
-    #tags , #tagsE {
-        animation-name: changeBorderColorNormal;
-        animation-duration: 0.6s;
+    .comboBox {
         font-size: 14px;
-        outline: none;
         width:130px;
-        border:2px solid #283593;
-        border-radius: 22px;
         padding-left:15px;
         padding-right:15px;
-        color:#424242;
         margin:0;
     }
 
@@ -257,26 +242,6 @@
         margin:0;
         padding:0;
         min-height:200px;
-    }
-    
-    #tags , #tagsE {
-        animation-name: changeBorderColorNormal;
-        animation-duration: 0.6s;
-        font-size: 20px;
-        outline: none;
-        width:100%;
-        border:2px solid #283593;
-        border-radius: 22px;
-        padding-left:15px;
-        padding-right:15px;
-        color:#424242;
-        margin:0;
-    }
-    
-    #tags:hover {
-        animation-name: changeBorderColor;
-        animation-duration: 0.3s;
-        border-color:#F50057;
     }
 
     #cont {
@@ -395,7 +360,7 @@
     }
 
     .lDiv {
-        -webkit-animation: changeOpacity 0.5s 1;
+        animation: changeOpacity 0.5s 1;
         height:auto;
         display:grid;
         margin: 0 auto 0 auto;
@@ -425,45 +390,11 @@
         margin-top:8px;
     }
 
-    #inputBox {
-        animation-name: changeBorderColorNormal;
-        animation-duration: 0.6s;
+    .roundTextBox {
         font-size: 20px;
-        outline: none;
         width:auto;
-        border:2px solid #283593;
-        border-radius: 22px;
         padding-left:15px;
         padding-right:15px;
-        color:#424242;
-    }
-
-    #inputBtn {
-        animation-name: changeButtonNormal;
-        animation-duration: 0.6s;
-        border:2px solid #283593;
-        font-Size:20px;
-        outline:none;
-        padding:5px 10px 5px 10px;
-        border-radius:22px;
-        font-weight: bold;
-        cursor:pointer;
-        background-color: white;
-        color:#283593;
-        width:150px;
-        margin-left:10px;
-    }
-
-    #inputBtn:hover:enabled {
-        animation-name: changeButton;
-        animation-duration: 0.3s;
-        border-color:#F50057;
-        color:#F50057;
-    }
-
-    #inputBtn:active {
-        background-Color: #F50057 ;
-        color:#fff;
     }
 
     .tCan {
@@ -532,6 +463,8 @@
     }
     
     #newTagContainer div {
+        animation-name:changeOpacity;
+        animation-duration: 0.8s;
         display:grid;
         grid-template-rows:auto;
         grid-template-columns: 16fr 6fr 2fr;
@@ -540,49 +473,106 @@
         height:auto;
     }
     
-    #newTagBox {
-        animation-name: changeBorderColorNormal;
-        animation-duration: 0.6s;
+    .comboBox {
         font-size: 20px;
-        outline: none;
-        width:auto;
-        border:2px solid #283593;
-        border-radius: 22px;
-        padding-left:15px;
-        padding-right:15px;
-        color:#424242;
-    }
-    
-    #newTagCombo {
-        animation-name: changeBorderColorNormal;
-        animation-duration: 0.6s;
-        font-size: 20px;
-        outline: none;
         width:100%;
-        border:2px solid #283593;
-        border-radius: 22px;
         padding-left:15px;
         padding-right:15px;
-        color:#424242;
         margin:0;
     }
     
-    #tagBtn {
-        animation-name: changeButtonNormal;
-        animation-duration: 0.6s;
-        border:2px solid #283593;
+    .roundButton {
         font-Size:20px;
-        outline:none;
-        padding:5px 10px 5px 10px;
-        border-radius:22px;
-        font-weight: bold;
-        cursor:pointer;
-        background-color: white;
-        color:#283593;
         width:150px;
         margin-left:10px;
     }
 }
+
+
+
+/*///////////////////////////////////////////////////////////////////////////////////////////////////*/
+
+
+
+.roundButton {
+    padding:5px 10px 5px 10px;
+    font-weight: bold;
+}
+
+.roundButton:enabled {
+    animation-name: changeButtonNormal;
+    animation-duration: 0.6s;
+    color:#283593;
+}
+
+.roundButton:hover:enabled {
+    animation-name:changeButton;
+    animation-duration: 0.3s;
+    border-color:#F50057;
+    color:#F50057;
+}
+
+.roundButton:active:enabled {
+    background-Color: #F50057 ;
+    color:#fff;
+}
+
+.roundTextBox {
+    outline: none;
+    color:#424242;
+}
+
+.roundTextBox:enabled {
+    animation-name: changeBorderColorNormal;
+    animation-duration: 0.6s;
+    border:2px solid #283593;
+}
+
+.roundBox {
+    border-radius:22px;
+    color:#424242;
+}
+
+.roundBox:enabled {
+    border-color:#283593;
+    background-color: #fff;
+}
+
+.roundBox:hover:enabled {
+    animation-name: changeBorderColor;
+    animation-duration: 0.3s;
+    border-color:#F50057;
+}
+
+.roundBox:disabled {
+    border-color:#424242;
+    cursor:not-allowed;
+    background-color:#FAFAFA;
+}
+
+.comboBox {
+    outline: none;
+    border-radius: 22px;
+    color:#424242;
+}
+
+.comboBox:enabled {
+    animation-name: changeBorderColorNormal;
+    animation-duration: 0.6s;
+    border:2px solid #283593;
+}
+
+.comboBox:hover:enabled {
+    animation-name: changeBorderColor;
+    animation-duration: 0.3s;
+    border-color:#F50057;
+}
+
+
+
+/*///////////////////////////////////////////////////////////////////////////////////////////////////*/
+
+
 
 .invalidTask::-webkit-input-placeholder
 {
@@ -607,30 +597,6 @@
 .invalidTask::placeholder
 {
     color: #F44336;
-}
-
-#inputBox:focus {
-    background-color:#F5F5F5;
-    border-color:#F50057;
-}
-
-#inputBox:hover:enabled {
-    animation-name: changeBorderColor;
-    animation-duration: 0.3s;
-    border-color:#F50057;
-    color:#424242;
-}
-
-#newTagBox:focus {
-    background-color:#F5F5F5;
-    border-color:#F50057;
-}
-
-#newTagBox:hover:enabled {
-    animation-name: changeBorderColor;
-    animation-duration: 0.3s;
-    border-color:#F50057;
-    color:#424242;
 }
 
 .saved::-webkit-input-placeholder
@@ -681,6 +647,12 @@
     background: rgba(245, 245, 245,1.0); 
 }
 
+
+
+/*///////////////////////////////////////////////////////////////////////////////////////////////////*/
+
+
+
 .container:hover {
     box-shadow: 0 0 1px 1px whitesmoke;
 }
@@ -725,24 +697,6 @@
     display: block;
 }
 
-#tagBtn:hover:enabled {
-    animation-name: changeButton;
-    animation-duration: 0.3s;
-    border-color:#F50057;
-    color:#F50057;
-}
-
-#tagBtn:active {
-    background-Color: #F50057 ;
-    color:#fff;
-}
-
-#newTagCombo:hover {
-    animation-name: changeBorderColor;
-    animation-duration: 0.3s;
-    border-color:#F50057;
-}
-
 /* Style the checkmark/indicator */
 .container .checkmark:after {
     left: 9px;
@@ -755,6 +709,12 @@
     -ms-transform: rotate(45deg);
     transform: rotate(45deg);
 }
+
+
+
+/*///////////////////////////////////////////////////////////////////////////////////////////////////*/
+
+
 
 @keyframes changeBorderColor {
     from {border-color: #283593;}
@@ -789,11 +749,4 @@
 @-webkit-keyframes changeOpacity {
   0%   { opacity: 0; }
   100% { opacity: 1; }
-}
-
-#inputBtn:disabled , #inputBox:disabled , #newTagBox:disabled , #tagBtn:disabled {
-    color:#424242;
-    border-color:#424242;
-    background-color: #FAFAFA;
-    cursor:not-allowed;
 }
