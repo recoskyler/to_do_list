@@ -243,7 +243,7 @@
         font-family: 'Open Sans', sans-serif;
         min-height:100px;
         min-width:800px;
-        background-image: url("./Images/wallpaper.jpg");
+        background-image: url("./Images/wallpaper.JPG");
         background-repeat:no-repeat;
         background-size:cover;
         background-attachment: fixed;
@@ -401,7 +401,7 @@
         margin: 0 auto 0 auto;
         padding:2px;
         grid-template-rows: minmax(25px 100%) 15px;
-        grid-template-columns: 1fr 80px 30px 30px;
+        grid-template-columns: 1fr 100px 30px 30px;
         width:98%;
     }
     

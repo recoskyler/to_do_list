@@ -28,5 +28,6 @@ export const variables = {
     tagKeyName               : "tags",
     invalidTagPlaceholder    : "Please type a valid tag name",
     defaultTagPlaceholder    : "New tag name",
-    invalidTagDelPlaceholder : "Please delete all tasks tagged"
+    invalidTagDelPlaceholder : "Please delete all tasks tagged",
+    tagMaxLength             : 8
 };

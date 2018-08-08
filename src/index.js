@@ -166,7 +166,7 @@ export class List extends React.Component {
                 </div>
                 <div id="newTagContainer">
                     <div>
-                        <input id={variables.tagBoxId} type="text" placeholder={variables.defaultTagPlaceholder} />
+                        <input id={variables.tagBoxId} type="text" placeholder={variables.defaultTagPlaceholder} maxLength={variables.tagMaxLength} />
                         <select id={variables.tagEditComboId} onChange={this.changeTagEditMode}>
                             {t}
                             <option value="addnew">Add New</option>
@@ -204,7 +204,7 @@ export class List extends React.Component {
             }, 4000);
             return false;
         } else {
-            document.getElementById(variables.tagBoxId).placeholder = variables.defaultPlaceholder;
+            document.getElementById(variables.tagBoxId).placeholder = variables.defaultTagPlaceholder;
             document.getElementById(variables.tagBoxId).value = "";
         }
         tmp.splice(index, 1);
@@ -268,7 +268,7 @@ export class List extends React.Component {
             }, 3000);
             return false;
         } else {
-            document.getElementById(variables.tagBoxId).placeholder = variables.defaultPlaceholder;
+            document.getElementById(variables.tagBoxId).placeholder = variables.defaultTagPlaceholder;
         }
 
         tmp.push(e.value);
