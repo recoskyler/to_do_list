@@ -30,5 +30,6 @@ export const variables = {
     defaultTagPlaceholder    : "New tag name",
     invalidTagDelPlaceholder : "Please delete all tasks tagged",
     tagMaxLength             : 8,
-    defaultClasses           : "roundBox roundTextBox"
+    defaultClasses           : "roundBox roundTextBox",
+    cookieName               : "pcid"
 };

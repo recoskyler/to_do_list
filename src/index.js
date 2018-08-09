@@ -6,6 +6,7 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
+import Firebase from 'firebase';
 import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
@@ -13,7 +14,18 @@ import { Item } from './Scripts/Item';
 import { Tag } from './Scripts/Tag'
 import listImage from './Images/listPic.png';
 import { variables } from './Helpers/variables';
-import { getFormattedCurrentDateTime, existsInArray, saveTasks, loadTasks, saveTags, loadTags, tagExists } from './Helpers/functions';
+import { getFormattedCurrentDateTime, existsInArray, saveTasks, loadTasks, saveTags, loadTags, tagExists, checkCookie } from './Helpers/functions';
+
+var config = {
+    apiKey: "AIzaSyAP7eU0WPfyUpatPg43iPUwjLiFaUHwWM0",
+    authDomain: "to-do-list-47d73.firebaseapp.com",
+    databaseURL: "https://to-do-list-47d73.firebaseio.com",
+    projectId: "to-do-list-47d73",
+    storageBucket: "to-do-list-47d73.appspot.com",
+    messagingSenderId: "221523978697"
+};
+
+Firebase.initializeApp(config);
 
 let currentTaskId = 0;
 let editMode = false;
@@ -146,6 +158,9 @@ export class List extends React.Component {
         if (t === null || t === undefined) {
             t = null;
         }
+
+        console.log(JSON.stringify(this.state.tasks));
+        console.log(JSON.stringify(this.state.tags));
 
         return (
             <div id="gridCont">
@@ -365,6 +380,13 @@ export class List extends React.Component {
 
     }
 }
+
+
+if (!checkCookie(variables.cookieName)) {
+    let db = Firebase.database();
+    db.computers.
+}
+
 
 //Uncomment this to clear local storage
 
