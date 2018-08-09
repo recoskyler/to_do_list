@@ -9,6 +9,7 @@ import ReactDOM from 'react-dom';
 import Firebase from 'firebase';
 import './index.css';
 import App from './App';
+import { Login } from './Login';
 import registerServiceWorker from './registerServiceWorker';
 import { Item } from './Scripts/Item';
 import { Tag } from './Scripts/Tag'
@@ -31,6 +32,7 @@ let currentTaskId = 0;
 let editMode = false;
 let tagEditMode = 1;
 let pcid = 0;
+let rem = false;
 
 export class List extends React.Component {
     constructor(props) {
@@ -127,7 +129,9 @@ export class List extends React.Component {
             this.setState({ tasks: res });
         });
 
-        this.setState({ tags: loadTags(pcid) });
+        loadTags(pcid).then((res) => {
+            this.setState({ tags: res })
+        });
 
         console.log("TASKS: " + JSON.stringify(t));
 
@@ -160,6 +164,11 @@ export class List extends React.Component {
         }
     }
 
+    logout() {
+        setCookie("remember", "", new Date(2019,1,1,1,1,1,1));
+        window.location.reload(true); 
+    }
+
     render() {
         const i = this.getTasks(this.state.tasks);
         let t = this.getTags(this.state.tags);
@@ -173,7 +182,7 @@ export class List extends React.Component {
                 <div id="pageTitle" className="box">
                     <img src={listImage} alt="To-Do List" />
                     <h1>My To-Do List</h1>
-                    <span><a href={variables.recoskylerLink} target="_blank">by Recoskyler</a></span>
+                    <span><a onClick={this.logout}>Logout</a></span>
                 </div>
                 <div id="newContainer">
                     <div>
@@ -230,7 +239,7 @@ export class List extends React.Component {
         }
         tmp.splice(index, 1);
         this.setState({ tags: tmp });
-        saveTags(tmp);
+        saveTags(tmp, pcid);
     }
 
     checkEdit(e) {
@@ -294,7 +303,7 @@ export class List extends React.Component {
 
         tmp.push(e.value);
         this.setState({ tags: tmp });
-        saveTags(tmp);
+        saveTags(tmp, pcid);
         document.getElementById(variables.tagBoxId).value = "";
     }
 
@@ -304,7 +313,7 @@ export class List extends React.Component {
         tmp[k].checked = s === "checkedStyle" ? false : true;
         tmp[k].checkedTime = getFormattedCurrentDateTime(tmp[k].checked);
         this.setState({ tasks: tmp });
-        saveTasks(tmp);
+        saveTasks(tmp, pcid);
     }
 
     addTask(tsk) {
@@ -345,7 +354,7 @@ export class List extends React.Component {
             document.getElementById(variables.inputBoxId).className = variables.defaultClasses;
         }, 1000);
 
-        saveTasks(tmp);
+        saveTasks(tmp, pcid);
     }
 
     getTasks(items) {
@@ -387,37 +396,51 @@ export class List extends React.Component {
     }
 }
 
-if (!checkCookie(variables.cookieName)) {
-    let db = Firebase.database();
-    let newId = "";
-
-    db.ref('computers/count').once("value", function(snapshot) {
-        newId = snapshot.val();
-        console.log("Set PCID: " + newId);
-        setCookie(variables.cookieName, newId.toString(), new Date(2019, 1, 1, 1, 1, 1, 1));
-        pcid = newId.toString();
-
-        // Get a key for a new Post.
-        let updates = {};
-        updates['/computers/ids/' + newId.toString()] = parseInt(newId, 10);
-        updates['/tags/' + newId.toString()] = ["Other"];
-
-        db.ref('computers/count').set(newId + 1);
-        db.ref().update(updates);
-    });
-} else if (getCookie(variables.cookieName) !== "-1") {
-    pcid = getCookie(variables.cookieName);
-}
-
-console.log("PCID: " + pcid.toString());
-
-
 //Uncomment this to clear local storage
 
 //localStorage.clear();
 
 //
 
+function renderList() {
+    document.getElementById("loginDiv").style.display = "none";
+    ReactDOM.render(<List />, document.getElementById('cont'));
+}
+
 ReactDOM.render(<App />, document.getElementById('root'));
-ReactDOM.render(<List />, document.getElementById('cont'));
+
+if (!checkCookie("remember")) {
+    ReactDOM.render(<Login onLogin={renderList}/>, document.getElementById('cont'));
+} else {
+    console.log("Cookie FOUND");
+    let db = Firebase.database();
+    let disfr = getCookie("remember").split('-');
+    let disuser = disfr[2];
+    let dispcid = disfr[0];
+    let disrem = disfr[1];
+
+    console.log(getCookie("remember"));
+    console.log(disrem);
+    console.log(disuser);
+    console.log(dispcid);
+
+    db.ref('/users/').once("value").then((snapshot) => {
+        const res = snapshot.val();
+        
+        if (snapshot.hasChild(disuser)) {
+            console.log("User FOUND");
+            console.log("Rems: " + disrem + " : " + res[disuser].rem);
+            if (res[disuser].rem.toString() === disrem.toString()) {
+                console.log("Rems MATCH");
+                pcid = dispcid;
+                ReactDOM.render(<List />, document.getElementById('cont'));
+            } else {
+                ReactDOM.render(<Login onLogin={renderList}/>, document.getElementById('cont'));
+            }
+        } else {
+            ReactDOM.render(<Login onLogin={renderList}/>, document.getElementById('cont'));
+        }
+    });
+}
+
 registerServiceWorker();

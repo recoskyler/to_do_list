@@ -4,7 +4,6 @@
 // Date:   August 2018
 //===============================================
 
-import { variables } from './variables';
 import Firebase from 'firebase';
 
 export function getFormattedCurrentDateTime(COrA = false) {
@@ -55,36 +54,46 @@ export function loadTasks(pcid) {
     let obj = [];
     const db = Firebase.database();
 
-    console.log("Getting tasks...");
     return new Promise(function(resolve, reject) {
         db.ref('/tasks/' + pcid.toString()).once("value").then(function(snapshot) {
             obj = snapshot.val();
-            console.log(obj);   
-            resolve(obj);
+            console.log(obj);
+
+            if (obj === null || obj === undefined || obj.length === 0) {
+                resolve([]);
+            } else {
+                resolve(obj);
+            }
         });
     });
 }
 
-export function saveTasks(t) {
-    localStorage.setItem(variables.keyName, JSON.stringify(t));
+export function saveTasks(t, pcid) {
+    const db = Firebase.database();
+    db.ref('tasks/' + pcid.toString()).set(t);
 }
 
-export function saveTags(t) {
-    localStorage.setItem(variables.tagKeyName, JSON.stringify(t));
+export function saveTags(t, pcid) {
+    const db = Firebase.database();
+    db.ref('tags/' + pcid.toString()).set(t);
 }
 
 export function loadTags(pcid) {
-    let obj = JSON.parse(localStorage.getItem(variables.tagKeyName));
+    let obj = [];
+    const db = Firebase.database();
 
-    if (obj === null || obj === undefined || obj.length === 0) {
-        return ["Other"];
-    }
+    return new Promise(function(resolve, reject) {
+        db.ref('/tags/' + pcid.toString()).once("value").then(function(snapshot) {
+            obj = snapshot.val();
+            console.log(obj);
 
-    if (!obj.includes("Other")) {
-        obj.push("Other");
-    }
-
-    return obj;
+            if (obj === null || obj === undefined || obj.length === 0) {
+                resolve(["Other"]);
+            } else {
+                resolve(obj);
+            }
+        });
+    });
 }
 
 export function tagExists(t, arr) {
