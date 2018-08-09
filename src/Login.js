@@ -60,18 +60,22 @@ export class Login extends React.Component {
         }
 
         let db = Firebase.database();
+        let pcnum = 0;
 
-        db.ref().once("value").then((snapshot) => {
+        db.ref('/computers/count').once("value").then((snapshot) => {
             const res = snapshot.val();
-            const usr = snapshot.val().users;
+            console.log(res);
+            pcnum = parseInt(res, 10);
+        });
+
+        db.ref('/users').once("value").then((snapshot) => {
+            const res = snapshot.val();
             let pid = 0;
             const rm = Math.floor(Math.random() * 9999999999);
 
-            pid = parseInt(res.computers.count, 10) + 1;
-
-            console.log(usr);
+            pid = pcnum;
             
-            if (usr.hasChild(username)) {
+            if (res.hasChild(username)) {
                 console.log("EXISTS");
                 document.getElementById("createUN").style.borderColor = "red";
                 return false;
