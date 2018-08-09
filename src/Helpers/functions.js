@@ -5,6 +5,7 @@
 //===============================================
 
 import { variables } from './variables';
+import Firebase from 'firebase';
 
 export function getFormattedCurrentDateTime(COrA = false) {
     const fW = COrA === true ? "Checked  " : "Added  ";
@@ -50,13 +51,18 @@ export function existsInArray(itm, arr) {
     return res;
 }
 
-export function loadTasks() {
-    let obj = JSON.parse(localStorage.getItem(variables.keyName));
+export function loadTasks(pcid) {
+    let obj = [];
+    const db = Firebase.database();
 
-    if (obj === null || obj === undefined || obj.length === 0) {
-        return [];
-    }
-    return obj;
+    console.log("Getting tasks...");
+    return new Promise(function(resolve, reject) {
+        db.ref('/tasks/' + pcid.toString()).once("value").then(function(snapshot) {
+            obj = snapshot.val();
+            console.log(obj);   
+            resolve(obj);
+        });
+    });
 }
 
 export function saveTasks(t) {
@@ -67,7 +73,7 @@ export function saveTags(t) {
     localStorage.setItem(variables.tagKeyName, JSON.stringify(t));
 }
 
-export function loadTags() {
+export function loadTags(pcid) {
     let obj = JSON.parse(localStorage.getItem(variables.tagKeyName));
 
     if (obj === null || obj === undefined || obj.length === 0) {
@@ -131,24 +137,21 @@ export function getCookie(cname) {
     var ca = document.cookie.split(';');
     for(var i = 0; i < ca.length; i++) {
         var c = ca[i];
-        while (c.charAt(0) == ' ') {
+        while (c.charAt(0) === ' ') {
             c = c.substring(1);
         }
-        if (c.indexOf(name) == 0) {
+        if (c.indexOf(name) === 0) {
             return c.substring(name.length, c.length);
         }
     }
     return "";
 }
 
-export function checkCookie() {
-    var user = getCookie("username");
-    if (user != "") {
-        alert("Welcome again " + user);
+export function checkCookie(cname) {
+    var cdata = getCookie(cname);
+    if (cdata !== "") {
+        return true;
     } else {
-        user = prompt("Please enter your name:", "");
-        if (user != "" && user != null) {
-            setCookie("username", user, 365);
-        }
+        return false;
     }
 }

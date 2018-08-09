@@ -14,7 +14,7 @@ import { Item } from './Scripts/Item';
 import { Tag } from './Scripts/Tag'
 import listImage from './Images/listPic.png';
 import { variables } from './Helpers/variables';
-import { getFormattedCurrentDateTime, existsInArray, saveTasks, loadTasks, saveTags, loadTags, tagExists, checkCookie } from './Helpers/functions';
+import { setCookie, getFormattedCurrentDateTime, existsInArray, saveTasks, loadTasks, saveTags, loadTags, tagExists, checkCookie, getCookie } from './Helpers/functions';
 
 var config = {
     apiKey: "AIzaSyAP7eU0WPfyUpatPg43iPUwjLiFaUHwWM0",
@@ -30,6 +30,7 @@ Firebase.initializeApp(config);
 let currentTaskId = 0;
 let editMode = false;
 let tagEditMode = 1;
+let pcid = 0;
 
 export class List extends React.Component {
     constructor(props) {
@@ -120,7 +121,15 @@ export class List extends React.Component {
 
     componentDidMount() {
         this.addListener();
-        this.setState({ tasks: loadTasks(), tags: loadTags() });
+        let t = [];
+
+        loadTasks(pcid).then((res) => {
+            this.setState({ tasks: res });
+        });
+
+        this.setState({ tags: loadTags(pcid) });
+
+        console.log("TASKS: " + JSON.stringify(t));
 
         document.getElementById(variables.tagComboId).value = "0";
     }
@@ -158,9 +167,6 @@ export class List extends React.Component {
         if (t === null || t === undefined) {
             t = null;
         }
-
-        console.log(JSON.stringify(this.state.tasks));
-        console.log(JSON.stringify(this.state.tags));
 
         return (
             <div id="gridCont">
@@ -381,11 +387,29 @@ export class List extends React.Component {
     }
 }
 
-
 if (!checkCookie(variables.cookieName)) {
     let db = Firebase.database();
-    db.computers.
+    let newId = "";
+
+    db.ref('computers/count').once("value", function(snapshot) {
+        newId = snapshot.val();
+        console.log("Set PCID: " + newId);
+        setCookie(variables.cookieName, newId.toString(), new Date(2019, 1, 1, 1, 1, 1, 1));
+        pcid = newId.toString();
+
+        // Get a key for a new Post.
+        let updates = {};
+        updates['/computers/ids/' + newId.toString()] = parseInt(newId, 10);
+        updates['/tags/' + newId.toString()] = ["Other"];
+
+        db.ref('computers/count').set(newId + 1);
+        db.ref().update(updates);
+    });
+} else if (getCookie(variables.cookieName) !== "-1") {
+    pcid = getCookie(variables.cookieName);
 }
+
+console.log("PCID: " + pcid.toString());
 
 
 //Uncomment this to clear local storage
