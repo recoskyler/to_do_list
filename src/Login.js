@@ -32,7 +32,7 @@ export class Login extends React.Component {
                         setCookie("remember", (pcid).toString() + "-" + res[username].rem + "-" + username, new Date(2019, 1, 1, 1, 1, 1, 1));
                     }
                     
-                    this.props.onLogin();
+                    this.props.onLogin(pcid);
                 } else {
                     document.getElementById("loginPW").style.borderColor = "red";
                 }
@@ -75,15 +75,15 @@ export class Login extends React.Component {
 
             pid = pcnum;
             
-            if (res.hasChild(username)) {
+            if (snapshot.hasChild(username)) {
                 console.log("EXISTS");
                 document.getElementById("createUN").style.borderColor = "red";
                 return false;
             } else {
-                Firebase.database().ref('/users/' + username).set({
-                    password: {pw},
-                    rem: {rm},
-                    id : {pid}
+                db.ref('/users/' + username).set({
+                    password:pw,
+                    rem:rm,
+                    pcid:pid
                 });
 
                 console.log("Create User:");

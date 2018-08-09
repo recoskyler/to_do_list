@@ -111,14 +111,14 @@ export class List extends React.Component {
             document.getElementById(variables.inputBoxId).className = variables.defaultClasses;
         }, 1000);
 
-        saveTasks(tmp);
+        saveTasks(tmp, pcid);
     }
 
     deleteTask(tid) {
         let tmp = JSON.parse(JSON.stringify(this.state.tasks));
         tmp.splice(tid, 1);
         this.setState({ tasks: tmp });
-        saveTasks(tmp);
+        saveTasks(tmp, pcid);
     }
 
     componentDidMount() {
@@ -402,9 +402,11 @@ export class List extends React.Component {
 
 //
 
-function renderList() {
+function renderList(pid) {
+    pcid = pid;
     document.getElementById("loginDiv").style.display = "none";
     ReactDOM.render(<List />, document.getElementById('cont'));
+    console.log("PCID: " + pcid);
 }
 
 ReactDOM.render(<App />, document.getElementById('root'));

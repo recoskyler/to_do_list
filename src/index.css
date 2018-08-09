@@ -241,7 +241,7 @@
         font-family: 'Open Sans', sans-serif;
         min-height:100px;
         min-width:800px;
-        background-image: url("./Images/wallpaper.JPG");
+        background-image: url("./Images/wallpaper.jpg");
         background-repeat:no-repeat;
         background-size:cover;
         background-attachment: fixed;
