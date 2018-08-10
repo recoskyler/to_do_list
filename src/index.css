@@ -679,6 +679,18 @@ body {
     background-color: #F50057;
 }
 
+.checkedTagLbl {
+    animation-name: normalCLbl;
+    animation-duration: 0.3s;
+    background-color: #F8BBD0;
+}
+
+.checkedTagLbl:hover {
+    animation-name: hoverCLbl;
+    animation-duration: 0.3s;
+    background-color: #F48FB1;
+}
+
 
 
 /*///////////////////////////////////////////////////////////////////////////////////////////////////*/
@@ -876,4 +888,15 @@ body {
 @keyframes normalLbl {
     from {color:#F50057; background-color: #FCE4EC;}
     to {color:white; background-color: #F50057;}
+}
+
+
+@keyframes hoverCLbl {
+    from {background-color: #F8BBD0;}
+    to {background-color: #F48FB1;}
+}
+
+@keyframes normalCLbl {
+    from {background-color: #F48FB1;}
+    to {background-color: #F8BBD0;}
 }
