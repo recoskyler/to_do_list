@@ -29,9 +29,10 @@ export class Login extends React.Component {
             username = document.getElementById("loginUN").value;
             password = document.getElementById("loginPW").value;
             rem = document.getElementById("loginCB").checked;
-            pcid = res[username].pcid;
             
             if (snapshot.hasChild(username)) {
+                pcid = res[username].pcid;
+                
                 if (res[username].password === password) {
                     if (rem) {
                         console.log((pcid).toString() + "-" + res[username].rem + "-" + username);
@@ -41,9 +42,15 @@ export class Login extends React.Component {
                     this.props.onLogin(pcid);
                 } else {
                     document.getElementById("loginPW").style.borderColor = "red";
+                    setTimeout(function () {
+                        document.getElementById("loginPW").style.borderColor = "#3949AB";
+                    }, 3000);
                 }
             } else {
                 document.getElementById("loginUN").style.borderColor = "red";
+                setTimeout(function () {
+                    document.getElementById("loginUN").style.borderColor = "#3949AB";
+                }, 3000);
             }
         });
     }
@@ -54,11 +61,17 @@ export class Login extends React.Component {
 
         if (username === "" || username === null || username === undefined) {
             document.getElementById("createUN").style.borderColor = "red";
+            setTimeout(function () {
+                document.getElementById("createUN").style.borderColor = "#3949AB";
+            }, 3000);
             return false;
         }
 
         if (pw === null || pw === undefined || pw === "" || pw.length < 8) {
             document.getElementById("createPW").style.borderColor = "red";
+            setTimeout(function () {
+                document.getElementById("createPW").style.borderColor = "#3949AB";
+            }, 3000);
             return false;
         }
 
@@ -78,6 +91,9 @@ export class Login extends React.Component {
             
             if (snapshot.hasChild(username)) {
                 document.getElementById("createUN").style.borderColor = "red";
+                setTimeout(function () {
+                    document.getElementById("createUN").style.borderColor = "#3949AB";
+                }, 3000);
                 return false;
             } else {
                 db.ref('/users/' + username).set({
