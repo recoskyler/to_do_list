@@ -1,3 +1,9 @@
+//===============================================
+// Title:  To-Do List Login System
+// Author: Adil Atalay Hamamcioglu (Recoskyler)
+// Date:   August 2018
+//===============================================
+
 import React from 'react';
 import Firebase from 'firebase';
 import {setCookie} from './Helpers/functions';
