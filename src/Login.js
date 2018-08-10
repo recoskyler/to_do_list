@@ -32,14 +32,14 @@ export class Login extends React.Component {
             
             if (snapshot.hasChild(username)) {
                 pcid = res[username].pcid;
-                
+
                 if (res[username].password === password) {
                     if (rem) {
                         console.log((pcid).toString() + "-" + res[username].rem + "-" + username);
                         setCookie("remember", (pcid).toString() + "-" + res[username].rem + "-" + username, new Date(2019, 1, 1, 1, 1, 1, 1));
                     }
                     
-                    this.props.onLogin(pcid);
+                    this.props.onLogin(pcid, username);
                 } else {
                     document.getElementById("loginPW").style.borderColor = "red";
                     setTimeout(function () {

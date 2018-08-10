@@ -33,6 +33,7 @@ let currentTaskId = 0;
 let editMode = false;
 let tagEditMode = 1;
 let pcid = 0;
+let username = "To-Do List";
 
 export class List extends React.Component {
     constructor(props) {
@@ -178,7 +179,7 @@ export class List extends React.Component {
             <div id="gridCont">
                 <div id="pageTitle" className="box">
                     <img src={listImage} alt="To-Do List" />
-                    <h1>My To-Do List</h1>
+                    <h1>{username}</h1>
                     <span onClick={this.logout}>Logout</span>
                 </div>
                 <div id="newContainer">
@@ -399,8 +400,9 @@ export class List extends React.Component {
 
 //
 
-function renderList(pid) {
+function renderList(pid, uname) {
     pcid = pid;
+    username = uname + "'s To-Do List";
     document.getElementById("loginDiv").style.display = "none";
     ReactDOM.render(<List />, document.getElementById('cont'));
 }
@@ -423,6 +425,7 @@ if (!checkCookie("remember")) {
         if (snapshot.hasChild(disuser)) {
             if (res[disuser].rem.toString() === disrem.toString()) {
                 pcid = dispcid;
+                username = disuser + "'s To-Do List";
                 ReactDOM.render(<List />, document.getElementById('cont'));
             } else {
                 ReactDOM.render(<Login onLogin={renderList}/>, document.getElementById('cont'));
