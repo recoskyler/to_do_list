@@ -44,7 +44,7 @@ export class Item extends React.Component {
 
         if (this.props.checkedState) {
             dt = this.props.checkTime;
-            tagClass += " checkedTagLbl";
+            tagClass = "checkedTagLbl";
         }
 
         return (
@@ -55,7 +55,7 @@ export class Item extends React.Component {
                         <span className="checkmark"></span>
                     </label>
                 </div>
-                <div className={tagClass}>
+                <div className={tagClass} onClick={this.handleEdit}>
                     <span>{this.props.tag}</span>
                 </div>
                 <div>

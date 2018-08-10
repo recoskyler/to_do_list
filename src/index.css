@@ -385,22 +385,21 @@
         border-radius: 10px 10px 10px 10px;
     }
     
-    .tagLbl {
+    .tagLbl, .checkedTagLbl {
         width:auto;
         height:40px;
-        background-color:#F50057;
-        color:white;
         font-size:auto;
         text-align: center;
         vertical-align: middle;
         border-radius: 22px;
+        cursor: pointer;
     }
     
     .checkedTagLbl {
         background-color:#F8BBD0;
     }
     
-    .tagLbl span {
+    .tagLbl span , .checkedTagLbl span  {
         display:block;
         margin-top:8px;
     }
@@ -666,6 +665,20 @@ body {
     box-shadow:none;
 }
 
+.tagLbl:hover {
+    animation-name: hoverLbl;
+    animation-duration: 0.3s;
+    color:#F50057;
+    background-color: #FCE4EC;
+}
+
+.tagLbl {
+    animation-name: normalLbl;
+    animation-duration: 0.3s;
+    color:white;
+    background-color: #F50057;
+}
+
 
 
 /*///////////////////////////////////////////////////////////////////////////////////////////////////*/
@@ -853,4 +866,14 @@ body {
 @keyframes normalShadow {
     from {box-shadow: 0 0 1px 1px #E0E0E0;}
     to {box-shadow:none;}
+}
+
+@keyframes hoverLbl {
+    from {color:white; background-color: #F50057;}
+    to {color:#F50057; background-color: #FCE4EC;}
+}
+
+@keyframes normalLbl {
+    from {color:#F50057; background-color: #FCE4EC;}
+    to {color:white; background-color: #F50057;}
 }
