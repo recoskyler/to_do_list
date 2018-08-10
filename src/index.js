@@ -32,7 +32,6 @@ let currentTaskId = 0;
 let editMode = false;
 let tagEditMode = 1;
 let pcid = 0;
-let rem = false;
 
 export class List extends React.Component {
     constructor(props) {
@@ -406,7 +405,6 @@ function renderList(pid) {
     pcid = pid;
     document.getElementById("loginDiv").style.display = "none";
     ReactDOM.render(<List />, document.getElementById('cont'));
-    console.log("PCID: " + pcid);
 }
 
 ReactDOM.render(<App />, document.getElementById('root'));
@@ -414,26 +412,17 @@ ReactDOM.render(<App />, document.getElementById('root'));
 if (!checkCookie("remember")) {
     ReactDOM.render(<Login onLogin={renderList}/>, document.getElementById('cont'));
 } else {
-    console.log("Cookie FOUND");
     let db = Firebase.database();
     let disfr = getCookie("remember").split('-');
     let disuser = disfr[2];
     let dispcid = disfr[0];
     let disrem = disfr[1];
 
-    console.log(getCookie("remember"));
-    console.log(disrem);
-    console.log(disuser);
-    console.log(dispcid);
-
     db.ref('/users/').once("value").then((snapshot) => {
         const res = snapshot.val();
         
         if (snapshot.hasChild(disuser)) {
-            console.log("User FOUND");
-            console.log("Rems: " + disrem + " : " + res[disuser].rem);
             if (res[disuser].rem.toString() === disrem.toString()) {
-                console.log("Rems MATCH");
                 pcid = dispcid;
                 ReactDOM.render(<List />, document.getElementById('cont'));
             } else {

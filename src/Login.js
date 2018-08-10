@@ -43,19 +43,16 @@ export class Login extends React.Component {
     }
 
     addUser(e) {
-        console.log("HERE");
         username = document.getElementById("createUN").value;
         let pw = document.getElementById("createPW").value;
 
         if (username === "" || username === null || username === undefined) {
             document.getElementById("createUN").style.borderColor = "red";
-            console.log("USERNAME");
             return false;
         }
 
         if (pw === null || pw === undefined || pw === "" || pw.length < 8) {
             document.getElementById("createPW").style.borderColor = "red";
-            console.log("PASSWORD");
             return false;
         }
 
@@ -64,19 +61,16 @@ export class Login extends React.Component {
 
         db.ref('/computers/count').once("value").then((snapshot) => {
             const res = snapshot.val();
-            console.log(res);
             pcnum = parseInt(res, 10);
         });
 
         db.ref('/users').once("value").then((snapshot) => {
-            const res = snapshot.val();
             let pid = 0;
             const rm = Math.floor(Math.random() * 9999999999);
 
             pid = pcnum;
             
             if (snapshot.hasChild(username)) {
-                console.log("EXISTS");
                 document.getElementById("createUN").style.borderColor = "red";
                 return false;
             } else {
@@ -86,13 +80,23 @@ export class Login extends React.Component {
                     pcid:pid
                 });
 
-                console.log("Create User:");
-                console.log("Username: " + username);
-                console.log("Password: " + pw);
-                console.log("Rem: " + rm);
-                console.log("ID: " + pid);
+                pid++;
+
+                db.ref('/computers/').set({
+                    count:pid
+                });
             }
+
+            username = undefined;
+            pw = undefined;
         });
+
+        document.getElementById("createUN").style.borderColor = "#00C853";
+        document.getElementById("createPW").style.borderColor = "#00C853";
+        document.getElementById("createUN").value = "";
+        document.getElementById("createPW").value = "";
+        document.getElementById("loginUN").value = username;
+        document.getElementById("loginPW").value = pw;
     }
 
     addListener() {
