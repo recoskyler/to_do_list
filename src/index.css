@@ -308,28 +308,26 @@
     }
 
     #pageTitle span {
+        animation-name: lon;
+        animation-duration: 0.2s;
         display:inline;
         position:relative;
         bottom:0;
-        margin:0;
+        margin:-17px 15px 0 0;
+        top:50%;
         font-size:15px;
         text-align: right;
         float:right;
-        padding: 60px 10px 0 0;
-    }
-    
-    #pageTitle a {
-        text-decoration: none;
-        color:#7986CB;
+        padding: 10px 20px;
+        background-color:#304FFE;
+        border-radius: 22px;
         cursor: pointer;
     }
-
-    #pageTitle a:hover {
-        color:#9FA8DA;
-    }
-
-    #pageTitle a:active {
-        color:#536DFE;
+    
+    #pageTitle span:hover {
+        animation-name: loh;
+        animation-duration: 0.2s;
+        background-color: #283593;
     }
 
     h1 {
@@ -411,7 +409,22 @@
         padding-right:15px;
     }
 
+    .tCan:hover {
+        animation-name:actionHover;
+        animation-duration: 0.3s;
+        opacity: 0.5;
+    }
+
+    .ePen:hover {
+        animation-name:actionHover;
+        animation-duration: 0.3s;
+        opacity: 0.5;
+    }
+
     .tCan {
+        animation-name:actionNormal;
+        animation-duration: 0.3s;
+        opacity: 1;
         display:inline;
         position:static;
         float:right;
@@ -424,6 +437,9 @@
     }
 
     .ePen {
+        animation-name:actionNormal;
+        animation-duration: 0.3s;
+        opacity: 1;
         display:inline;
         position:static;
         float:right;
@@ -899,4 +915,24 @@ body {
 @keyframes normalCLbl {
     from {background-color: #F48FB1;}
     to {background-color: #F8BBD0;}
+}
+
+@keyframes actionHover {
+    0%   { opacity: 1; }
+    100% { opacity: 0.5; }
+}
+
+@keyframes actionNormal {
+    0%   { opacity: 0.5; }
+    100% { opacity: 1; }
+}
+
+@keyframes loh {
+    from {background-color: #304FFE;}
+    to {background-color: #283593;}
+}
+
+@keyframes lon {
+    from {background-color: #283593;}
+    to {background-color: #304FFE;}
 }

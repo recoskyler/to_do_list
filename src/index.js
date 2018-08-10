@@ -181,7 +181,7 @@ export class List extends React.Component {
                 <div id="pageTitle" className="box">
                     <img src={listImage} alt="To-Do List" />
                     <h1>My To-Do List</h1>
-                    <span><a onClick={this.logout}>Logout</a></span>
+                    <span onClick={this.logout}>Logout</span>
                 </div>
                 <div id="newContainer">
                     <div>
