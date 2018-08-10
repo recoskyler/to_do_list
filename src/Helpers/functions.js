@@ -57,7 +57,6 @@ export function loadTasks(pcid) {
     return new Promise(function(resolve, reject) {
         db.ref('/tasks/' + pcid.toString()).once("value").then(function(snapshot) {
             obj = snapshot.val();
-            console.log(obj);
 
             if (obj === null || obj === undefined || obj.length === 0) {
                 resolve([]);
@@ -85,7 +84,6 @@ export function loadTags(pcid) {
     return new Promise(function(resolve, reject) {
         db.ref('/tags/' + pcid.toString()).once("value").then(function(snapshot) {
             obj = snapshot.val();
-            console.log(obj);
 
             if (obj === null || obj === undefined || obj.length === 0) {
                 resolve(["Other"]);

@@ -14,6 +14,7 @@ import registerServiceWorker from './registerServiceWorker';
 import { Item } from './Scripts/Item';
 import { Tag } from './Scripts/Tag'
 import listImage from './Images/listPic.png';
+import {LoadingImage} from './Scripts/LoadingImage';
 import { variables } from './Helpers/variables';
 import { setCookie, getFormattedCurrentDateTime, existsInArray, saveTasks, loadTasks, saveTags, loadTags, tagExists, checkCookie, getCookie } from './Helpers/functions';
 
@@ -122,17 +123,14 @@ export class List extends React.Component {
 
     componentDidMount() {
         this.addListener();
-        let t = [];
 
         loadTasks(pcid).then((res) => {
-            this.setState({ tasks: res });
+            this.setState({ tasks: res });        
         });
 
         loadTags(pcid).then((res) => {
             this.setState({ tags: res })
         });
-
-        console.log("TASKS: " + JSON.stringify(t));
 
         document.getElementById(variables.tagComboId).value = "0";
     }
@@ -408,6 +406,7 @@ function renderList(pid) {
 }
 
 ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(<LoadingImage />, document.getElementById('cont'))
 
 if (!checkCookie("remember")) {
     ReactDOM.render(<Login onLogin={renderList}/>, document.getElementById('cont'));
