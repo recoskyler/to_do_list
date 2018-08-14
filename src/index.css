@@ -330,6 +330,10 @@
         background-color: #283593;
     }
 
+    #pageTitle span:active {
+        background-color: #081470;
+    }
+
     h1 {
         display:inline;
         position: relative;
@@ -543,7 +547,7 @@ body {
 
 .roundButton:hover:enabled {
     animation-name:changeButton;
-    animation-duration: 0.3s;
+    animation-duration: 0.6s;
     border-color:#F50057;
     color:#F50057;
 }
